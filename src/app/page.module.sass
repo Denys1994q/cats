@@ -1,0 +1,38 @@
+@import '../styles/variables'
+
+.banner
+    height: 840px
+    background: $secondary-pink
+    border-radius: 20px
+    position: relative
+    z-index: 1
+    &::before
+        background-image: url('../../public/images/girl-and-pet.svg')
+        position: absolute
+        top: -30px
+        left: -64px
+        content: ''
+        display: block
+        z-index: 2
+        width: 775px
+        height: 900px
+
+// .banner
+//     position: relative
+//     width: 775px
+//     height: 900px
+//     &::before
+//         position: absolute
+//         top: 50%
+//         left: 50%
+//         transform: translate(-50%, -50%)
+//         content: ''
+//         display: block
+//         width: 680px
+//         height: 840px
+//         background: $secondary-pink
+//         border-radius: 20px
+//         z-index: 1
+// .bannerImage
+//     z-index: 2
+//     position: relative

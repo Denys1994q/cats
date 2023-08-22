@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import Image from "next/image";
 import NavMenu from "@/components/nav-menu/nav-menu";
+import Link from "next/link";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -12,26 +13,26 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-
-  const menuLinks = [
-    {title: 'Voting', img: '/images/voting.svg'},
-    {title: 'Breeds', img: '/images/breeds.svg'},
-    {title: 'Gallery', img: '/images/gallery.svg'},
-  ]
+    
+    const menuLinks = [
+        { title: "Voting", img: "/images/voting.svg" },
+        { title: "Breeds", img: "/images/breeds.svg" },
+        { title: "Gallery", img: "/images/gallery.svg" },
+    ];
 
     return (
         <html lang='en'>
             <body className={jost.className}>
                 <div className='main-container'>
                     <div className='main-container__nav-panel nav-panel'>
-                        <a href='' className="nav-panel__logo">
+                        <Link href='/' className='nav-panel__logo'>
                             <Image src='/images/logo.png' height={24} width={106} alt='logo' />
-                        </a>
-                        <div className="nav-panel__greeting">
-                          <Image src='/images/greeting.svg' height={58} width={182} alt='greeting-image' />
+                        </Link>
+                        <div className='nav-panel__greeting'>
+                            <Image src='/images/greeting.svg' height={58} width={182} alt='greeting-image' />
                         </div>
-                        <p className="nav-panel__subtitle">Welcome to MacPaw Bootcamp 2023</p>
-                        <NavMenu links={menuLinks} heading='Lets start using The Cat API'/>
+                        <p className='nav-panel__subtitle'>Welcome to MacPaw Bootcamp 2023</p>
+                        <NavMenu links={menuLinks} heading='Lets start using The Cat API' />
                     </div>
                     <div className='main-container__content'>{children}</div>
                 </div>
