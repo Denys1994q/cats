@@ -29,7 +29,7 @@ const NavMenu: FC<NavMenuProps> = ({ links, heading }) => {
             <ul className={styles.navMenu__list}>
                 {links.map((link, index) => {
                     const isActive = pathname === "/" + link.title.toLowerCase();
-                    const notActiveImg = hoveredImgIndex === index ? link.hoverImg : link.img;
+                    const notActiveImg = hoveredImgIndex === index  ? link.hoverImg : link.img;
                     return (
                         <Link href={link.title.toLowerCase()}>
                             <li
