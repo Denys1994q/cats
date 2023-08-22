@@ -1,4 +1,4 @@
-$primary: blue
+@import '../styles/variables.sass'
 
 *, ::after, ::before
     margin: 0
@@ -13,11 +13,10 @@ h1, h2, h3, h4, h5
     margin: 0
     padding: 0
 body
-    background: #fff
-    font-size: 1.4rem
-    font-family: 'Montserrat'
+    background: $secondary-grey
+    font-size: 14px
     font-weight: 400
-    color: black
+    color: $main-black
 img
     max-width: 100%
 a
@@ -54,3 +53,30 @@ p, ul
     margin: 0
 ul
     list-style: none
+
+// основний контейнер сторінок
+.main-container
+    max-width: 1440px
+    margin: 0 auto
+    padding: 30px
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    &__nav-panel
+        width: 446px
+        // border: 1px solid red
+        background: inherit
+    &__content
+        width: 680px
+        border: 1px solid red
+.nav-panel
+    &__logo
+        display: block
+        margin-bottom: 80px
+    &__greeting
+        margin-left: -23px
+        margin-bottom: 10px
+    &__subtitle
+        font-size: 20px
+        color: $main-grey
+        margin-bottom: 60px
