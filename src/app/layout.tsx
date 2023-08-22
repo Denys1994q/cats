@@ -13,11 +13,25 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    
     const menuLinks = [
-        { title: "Voting", img: "/images/voting.svg" },
-        { title: "Breeds", img: "/images/breeds.svg" },
-        { title: "Gallery", img: "/images/gallery.svg" },
+        {
+            title: "Voting",
+            img: "/images/voting.svg",
+            hoverImg: "/images/voting-hover.svg",
+            activeImg: "/images/voting-active.svg",
+        },
+        {
+            title: "Breeds",
+            img: "/images/breeds.svg",
+            hoverImg: "/images/breeds-hover.svg",
+            activeImg: "/images/breeds-active.svg",
+        },
+        {
+            title: "Gallery",
+            img: "/images/gallery.svg",
+            hoverImg: "/images/gallery-hover.svg",
+            activeImg: "/images/gallery-active.svg",
+        },
     ];
 
     return (

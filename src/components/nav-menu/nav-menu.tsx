@@ -1,14 +1,16 @@
-'use client'
+"use client";
 
-import React, { FC } from "react";
+import { useState, FC } from "react";
 import Image from "next/image";
 import styles from "./nav-menu.module.sass";
 import Link from "next/link";
-import { usePathname } from 'next/navigation'
+import { usePathname } from "next/navigation";
 
 interface NavMenuLink {
     title: string;
     img: string;
+    hoverImg: string;
+    activeImg: string;
 }
 
 interface NavMenuProps {
@@ -17,29 +19,38 @@ interface NavMenuProps {
 }
 
 const NavMenu: FC<NavMenuProps> = ({ links, heading }) => {
-    const pathname = usePathname()
-    console.log(pathname)
+    const pathname = usePathname();
+
+    const [hoveredImgIndex, setHoveredImgIndex] = useState<number | null>(null);
+
     return (
         <div className={styles.navMenu}>
             <h3 className={styles.navMenu__title}>{heading}</h3>
             <ul className={styles.navMenu__list}>
-                {links.map(link => {
-                     const isActive = pathname === '/' + link.title.toLowerCase()
-                     return (
+                {links.map((link, index) => {
+                    const isActive = pathname === "/" + link.title.toLowerCase();
+                    const notActiveImg = hoveredImgIndex === index ? link.hoverImg : link.img;
+                    return (
                         <Link href={link.title.toLowerCase()}>
-                            <li className={styles.navMenu__item}>
+                            <li
+                                className={styles.navMenu__item}
+                                onMouseEnter={() => setHoveredImgIndex(index)}
+                                onMouseLeave={() => setHoveredImgIndex(null)}
+                            >
                                 <Image
-                                    src={link.img}
+                                    src={isActive ? link.activeImg : notActiveImg}
                                     width={138}
                                     height={198}
                                     className={styles.navMenu__image}
-                                    alt='voting-logo'
+                                    alt='menu-icon-logo'
                                 />
-                                <h2 className={`${isActive ? styles.activeLink : ''} ${styles.navMenu__itemTitle}`}>{link.title}</h2>
+                                <h2 className={`${isActive ? styles.activeLink : ""} ${styles.navMenu__itemTitle}`}>
+                                    {link.title}
+                                </h2>
                             </li>
                         </Link>
-                    )
-                } )}
+                    );
+                })}
             </ul>
         </div>
     );
