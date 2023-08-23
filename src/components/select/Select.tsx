@@ -1,32 +1,59 @@
+"use client";
+
 import React, { FC, useState } from "react";
+import styles from "./select.module.sass";
 
-const Select: FC<any> = () => {
+interface Select {
+    name: string;
+}
+
+interface SelectProps {
+    data: Select[];
+    primary?: boolean;
+    secondary?: boolean;
+    label?: string;
+    id?: string
+}
+
+const Select: FC<SelectProps> = ({ data, primary, secondary, label, id }) => {
     const [selectedBreed, setSelectedBreed] = useState("all breeds");
-
-    const breeds = [
-        { id: 1, name: "Kek" },
-        { id: 2, name: "Shel" },
-    ];
-
-    const breedContentOptions = breeds.map(item => {
-        return (
-            <option key={item.id} value={item.name}>
-                {item.name}
-            </option>
-        );
-    });
 
     const getSelectedBreed = (e: any) => {
         setSelectedBreed(e.target.value);
     };
 
     return (
-        <select value={selectedBreed} className='breeds-select' onChange={e => getSelectedBreed(e)}>
-            <option key={"all breeds"} value='all breeds'>
-                All breeds
-            </option>
-            {breedContentOptions}
-        </select>
+        <>
+            {primary && (
+                <>
+                    {label && <label htmlFor={id} className={styles.label}>{label}</label>}
+                    <select id={id} value={selectedBreed} className={styles.select} onChange={e => getSelectedBreed(e)}>
+                        {data.map((option, idx) => (
+                            <option key={idx} value={option.name}>
+                                {option.name}
+                            </option>
+                        ))}
+                    </select>
+                </>
+            )}
+            {secondary && (
+                <>
+                    {label && <label htmlFor={id} className={styles.label}>{label}</label>}
+                    <select
+                        id={id}
+                        value={selectedBreed}
+                        className={`${styles.select} ${styles.secondary}`}
+                        onChange={e => getSelectedBreed(e)}
+                    >
+                        {data.map((option, idx) => (
+                            <option key={idx} value={option.name}>
+                                {option.name}
+                            </option>
+                        ))}
+                    </select>
+                </>
+            )}
+        </>
     );
 };
 

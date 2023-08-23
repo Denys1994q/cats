@@ -1,0 +1,34 @@
+@import '../../styles/variables'
+
+.select
+    width: 100%
+    height: 40px
+    border-radius: 10px
+    border: none
+    padding-left: 10px
+    font-size: 16px
+    line-height: 24px
+    color: $main-grey
+    appearance: none
+    -webkit-appearance: none
+    -moz-appearance: none
+    background: $secondary-grey url('../../../public/images/arrow-down.svg') no-repeat
+    background-position: right 10px center
+    cursor: pointer
+    padding-right: 10px
+    transition: all .2s ease
+    border: 2px solid white
+    &:hover
+        border: 2px solid $secondary-pink
+    option
+        background: white
+.secondary
+    color: $main-black
+    background: white url('../../../public/images/arrow-down.svg') no-repeat
+    background-position: right 10px center
+.label
+    color: $main-grey
+    font-size: 10px
+    font-weight: 500
+    line-height: 18px
+    text-transform: uppercase

@@ -1,0 +1,42 @@
+@import '../../../styles/variables'
+
+.btnWrapper
+    margin-bottom: 20px
+.selects
+    background: $secondary-grey
+    border-radius: 20px
+    padding: 20px
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+    gap: 20px
+.selectItem
+    width: 290px
+.limit
+    width: 240px
+.refreshBtn
+    width: 40px
+    height: 40px
+    position: relative
+    background: white
+    border-radius: 10px
+    align-self: end
+    transition: all .4s ease
+    &:hover
+        background: $main-pink
+        &::before
+            background: url('/images/refresh-icon-white.svg') no-repeat
+    &::before
+        content: ''
+        background: url('/images/refresh-icon.svg') no-repeat
+        position: absolute
+        top: 50%
+        left: 50%
+        width: 20px
+        height: 20px
+        transform: translate(-50%, -50%)
+.limitWrapper
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    gap: 10px
