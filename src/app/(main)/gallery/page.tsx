@@ -1,12 +1,24 @@
 import styles from "./page.module.sass";
 import Select from "@/components/select/Select";
 import NavBtn from "@/components/nav-btn/Nav-btn";
+import Image from "next/image";
+import GridPanel from "@/components/grid-panel/Grid-panel";
 
 export default function Page() {
+
+    const cats = [
+        { src: "/images/grid1.png" },
+        { src: "/images/grid2.png" },
+        { src: "/images/grid2.png" },
+        { src: "/images/cat.png" },
+        { src: "/images/cat.png" },
+    ];
+
     return (
         <section>
             <div className={styles.btnWrapper}>
                 <NavBtn text={"gallery"} />
+                <button className={styles.uploadBtn}></button>
             </div>
             <div className={styles.selects}>
                 <div className={styles.selectItem}>
@@ -24,6 +36,9 @@ export default function Page() {
                     </div>
                     <button className={styles.refreshBtn}></button>
                 </div>
+            </div>
+            <div>
+                <GridPanel imgs={cats} />
             </div>
         </section>
     );

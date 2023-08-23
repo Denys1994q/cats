@@ -2,6 +2,16 @@
 
 .btnWrapper
     margin-bottom: 20px
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+.uploadBtn
+    width: 143px
+    height: 40px
+    background: url('/images/upload.svg')
+    transition: all .4s ease
+    &:hover
+        background: url('/images/upload-pink.svg')
 .selects
     background: $secondary-grey
     border-radius: 20px
@@ -10,6 +20,7 @@
     justify-content: space-between
     flex-wrap: wrap
     gap: 20px
+    margin-bottom: 20px
 .selectItem
     width: 290px
 .limit
