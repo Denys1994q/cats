@@ -1,3 +1,11 @@
+import NavBtn from "@/components/nav-btn/Nav-btn";
+import VotingPanel from "@/components/voting-panel/Voting-panel";
+
 export default function Page() {
-    return <h1>Hello, Voting!</h1>
+    return (
+        <section>
+            <NavBtn text={'voting'}/> 
+            <VotingPanel />
+        </section>
+    );
 }

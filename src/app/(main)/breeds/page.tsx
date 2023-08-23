@@ -1,3 +1,13 @@
+"use client"
+
+import NavBtn from "@/components/nav-btn/Nav-btn";
+import Select from "@/components/select/Select";
+
 export default function Page() {
-    return <h1>Hello, Breeds!</h1>
+    return (
+        <section>
+            <NavBtn text={'breeds'} /> 
+            <Select />
+        </section>
+    );
 }

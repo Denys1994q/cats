@@ -5,36 +5,19 @@ import Image from "next/image";
 import styles from "./nav-btns.module.sass";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BtnLink } from "../search-panel/Search-panel";
 
-const NavBtns: FC<any> = () => {
+interface NavBtnsProps {
+    links: BtnLink[];
+}
+
+const NavBtns: FC<NavBtnsProps> = ({links}) => {
     const pathname = usePathname();
-
-    const btns = [
-        {
-            title: "likes",
-            img: "/images/likes-default.svg",
-            hoverImg: "/images/likes-default.svg",
-            activeImg: "/images/likes-active.svg",
-        },
-        {
-            title: "favourites",
-            img: "/images/favs-default.svg",
-            hoverImg: "/images/favs-default.svg",
-            activeImg: "/images/favs-active.svg",
-        },
-        {
-            title: "dislikes",
-            img: "/images/dislike-default.svg",
-            hoverImg: "/images/dislike-default.svg",
-            activeImg: "/images/dislike-active.svg",
-        },
-    ];
-
     const [hoveredBtnIndex, setHoveredBtnIndex] = useState<number | null>(null);
 
     return (
         <div className={styles.btns}>
-            {btns.map((btn, index) => {
+            {links.map((btn, index) => {
                 const isActive = pathname === "/" + btn.title.toLowerCase();
                 const notActiveBtn = hoveredBtnIndex === index ? btn.hoverImg : btn.img;
                 return (
