@@ -1,4 +1,5 @@
 import styles from "./upload-modal.module.sass";
+import Message from "../message/Message";
 
 const UploadModal = ({ isOpen, closeModal }: any) => {
     if (!isOpen) return null;
@@ -23,10 +24,10 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
                     </h3>
                 </div>
                 <p className={styles.result}>No file selected</p>
-                <p className={styles.result}>No file selected</p>
-                <p className={styles.result}>No file selected</p>
-                <p className={styles.result}>No file selected</p>
-                <p className={styles.result}>No file selected</p>
+                <p className={styles.result}>Image File Name: cat-puppy-on-garden--1586966191.jpg</p>
+                <button className={styles.uploadBtn}></button>
+                <Message successText="Thanks for the Upload - Cat found!" />
+                <Message errorText="No Cat found - try a different one" />
             </div>
             <div className={styles.overlay} onClick={() => closeModal()}></div>
         </>
