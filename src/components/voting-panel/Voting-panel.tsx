@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./voting-panel.module.sass";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Message from "../message/Message";
 
 interface VotingPanelProps {
     // text: string
@@ -24,23 +25,14 @@ const VotingPanel: FC<VotingPanelProps> = () => {
                 </div>
             </div>
             <ul className={styles.panel__list}>
-                <li className={styles.listItem}>
-                    <div className={styles.timeWrapper}>
-                        <div className={styles.timeItem}>10:55</div>
-                        <div className={styles.textItem}>Image ID: <span>fQSunHvl8</span> was added to Favourites</div>
-                    </div>
-                    <div className={styles.iconItem}>
-                    <Image src='/images/favs-default.svg' height={20} width={20} alt='icon' />
-                    </div>
+                <li>
+                   <Message like time="10:22" id='fQSunHvl8' />
                 </li>
-                <li className={styles.listItem}>
-                    <div className={styles.timeWrapper}>
-                        <div className={styles.timeItem}>10:55</div>
-                        <div className={styles.textItem}>Image ID: <span>fQSunHvl8</span> was added to Favourites</div>
-                    </div>
-                    <div className={styles.iconItem}>
-                    <Image src='/images/favs-default.svg' height={20} width={20} alt='icon' />
-                    </div>
+                <li>
+                   <Message dislike time="10:22" id='fQSunHvl8' />
+                </li>
+                <li>
+                   <Message favourite time="10:22" id='fQSunHvl8' />
                 </li>
             </ul>
         </div>

@@ -7,7 +7,7 @@ export default function Page() {
     return (
         <section>
             <div className={styles.btnWrapper}>
-                <NavBtn text={"likes"} />
+                <NavBtn text={"dislikes"} />
             </div>
             {/* <GridPanel /> */}
             <Message text='No item found' />

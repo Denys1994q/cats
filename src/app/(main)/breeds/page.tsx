@@ -40,13 +40,13 @@ export default function Page() {
                         <Select primary id={"limit"} data={limits} />
                     </div>
                     <div>
-                        <button>
-                            <Image src='/images/ascend.png' height={40} width={40} alt='logo' />
+                        <button className={`${styles.btn} ${styles.ascendBtn}`}>
+                            {/* <Image src='/images/ascend.png' height={40} width={40} alt='logo' /> */}
                         </button>
                     </div>
                     <div>
-                        <button>
-                            <Image src='/images/descend.png' height={40} width={40} alt='logo' />
+                        <button className={`${styles.btn} ${styles.descendBtn}`}>
+                            {/* <Image src='/images/descend.png' height={40} width={40} alt='logo' /> */}
                         </button>
                     </div>
                 </div>

@@ -25,7 +25,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
     return (
         <section>
-            <SearchPanel links={links} />
+            <SearchPanel links={links} pageHref="search" />
             <div className={styles.contentWrapper}>{children}</div>
         </section>
     );

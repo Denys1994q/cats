@@ -5,7 +5,6 @@ import Image from "next/image";
 import GridPanel from "@/components/grid-panel/Grid-panel";
 
 export default function Page() {
-
     const cats = [
         { src: "/images/grid1.png" },
         { src: "/images/grid2.png" },

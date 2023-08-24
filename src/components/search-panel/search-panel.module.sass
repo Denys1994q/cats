@@ -9,16 +9,7 @@
         width: 470px
         height: 60px
         position: relative
-        &::after
-            content: ''
-            background: url('../../../public/images/filter-icon.png')
-            width: 40px
-            height: 40px
-            display: block
-            position: absolute
-            top: 50%
-            right: 10px
-            transform: translate(0, -50%)
+        transition: all .4s ease
     &__input
         padding: 15px 0px 15px 20px
         width: 100%
@@ -27,3 +18,19 @@
         color: $main-grey
         font-size: 20px
         line-height: 30px
+        border: 2px solid transparent
+        &:hover
+            border: 2px solid $secondary-pink
+        &:focus
+            border: 2px solid $main-pink
+    &__filter
+        position: absolute
+        top: 50%
+        right: 10px
+        transform: translate(0, -50%)
+        width: 40px
+        height: 40px
+        background: url('../../../public/images/filter-icon.png')
+        transition: all .2s ease
+        &:hover
+            background: url('../../../public/images/filter-icon-pink.png')
