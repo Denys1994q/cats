@@ -3,21 +3,17 @@
 import { useState, FC } from "react";
 import Image from "next/image";
 import styles from "./voting-panel.module.sass";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Message from "../message/Message";
 
 interface VotingPanelProps {
-    // text: string
+    image: string
 }
 
-const VotingPanel: FC<VotingPanelProps> = () => {
-
-
+const VotingPanel: FC<VotingPanelProps> = ({image}) => {
     return (
         <div className={styles.panel}>
             <div className={styles.panel__imgWrapper}>
-                <Image src='/images/cat.png' width={640} height={360} className={styles.panel__img} alt='cat' />
+                <Image src={image} width={640} height={360} className={styles.panel__img} alt='cat' />
                 <div className={styles.panel__tools}>
                     <button className={`${styles.panel__btn} ${styles.panel__btnStart}`}></button>
                     <button className={`${styles.panel__btn} ${styles.panel__btnMiddle}`}></button>
