@@ -6,10 +6,11 @@ import styles from "./voting-panel.module.sass";
 import Message from "../message/Message";
 
 interface VotingPanelProps {
-    image: string
+    image: string;
+    id: string
 }
 
-const VotingPanel: FC<VotingPanelProps> = ({image}) => {
+const VotingPanel: FC<VotingPanelProps> = ({image, id}) => {
     return (
         <div className={styles.panel}>
             <div className={styles.panel__imgWrapper}>

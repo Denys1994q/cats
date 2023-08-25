@@ -5,6 +5,7 @@ import styles from "./select.module.sass";
 
 interface Select {
     name: string;
+    id: string;
 }
 
 interface SelectProps {
@@ -12,24 +13,34 @@ interface SelectProps {
     primary?: boolean;
     secondary?: boolean;
     label?: string;
-    id?: string
+    id: string;
+    onSelect: (id: string, e: any) => void;
 }
 
-const Select: FC<SelectProps> = ({ data, primary, secondary, label, id }) => {
-    const [selectedBreed, setSelectedBreed] = useState("all breeds");
+const Select: FC<SelectProps> = ({ data, primary, secondary, label, id, onSelect }) => {
+    // const [selectedBreed, setSelectedBreed] = useState(data[0].value);
 
-    const getSelectedBreed = (e: any) => {
-        setSelectedBreed(e.target.value);
+    const selectHandler = (id: string, value: any) => {
+        // setSelectedBreed(value);
+        onSelect(id, value);
     };
 
     return (
         <>
             {primary && (
                 <>
-                    {label && <label htmlFor={id} className={styles.label}>{label}</label>}
-                    <select id={id} value={selectedBreed} className={styles.select} onChange={e => getSelectedBreed(e)}>
+                    {label && (
+                        <label htmlFor={id} className={styles.label}>
+                            {label}
+                        </label>
+                    )}
+                    <select
+                        id={id}
+                        className={styles.select}
+                        onChange={e => selectHandler(id, e.target.value)}
+                    >
                         {data.map((option, idx) => (
-                            <option key={idx} value={option.name}>
+                            <option key={idx} value={option.id}>
                                 {option.name}
                             </option>
                         ))}
@@ -38,15 +49,18 @@ const Select: FC<SelectProps> = ({ data, primary, secondary, label, id }) => {
             )}
             {secondary && (
                 <>
-                    {label && <label htmlFor={id} className={styles.label}>{label}</label>}
+                    {label && (
+                        <label htmlFor={id} className={styles.label}>
+                            {label}
+                        </label>
+                    )}
                     <select
                         id={id}
-                        value={selectedBreed}
                         className={`${styles.select} ${styles.secondary}`}
-                        onChange={e => getSelectedBreed(e)}
+                        onChange={e => selectHandler(id, e.target.value)}
                     >
                         {data.map((option, idx) => (
-                            <option key={idx} value={option.name}>
+                            <option key={idx} value={option.id}>
                                 {option.name}
                             </option>
                         ))}

@@ -1,8 +1,10 @@
 import { FC } from "react";
 import styles from "./grid-panel.module.sass";
+// import 
 
 interface Img {
-    src: string;
+    url: string;
+    
 }
 
 interface GridPanelProps {
@@ -15,7 +17,7 @@ const GridPanel: FC<GridPanelProps> = ({ imgs }) => {
             <div className={styles.grid}>
                 {imgs.slice(0, 5).map((item, i) => (
                     <div key={i} className={styles.gridItem}>
-                        <img src={item.src} className={styles.image} alt='cat-image' />
+                        <img src={item.url} className={styles.image} alt='cat-image' />
                     </div>
                 ))}
             </div>
@@ -24,21 +26,21 @@ const GridPanel: FC<GridPanelProps> = ({ imgs }) => {
                     <div className={`${styles.grid} ${styles.grid__reverseColumns}`}>
                         {imgs.slice(5, 10).map((item, i) => (
                             <div key={i} className={styles.gridItem}>
-                                <img src={item.src} className={styles.image} alt='cat-image' />
+                                <img src={item.url} className={styles.image} alt='cat-image' />
                             </div>
                         ))}
                     </div>
                     <div className={styles.grid}>
                         {imgs.slice(10, 15).map((item, i) => (
                             <div key={i} className={styles.gridItem}>
-                                <img src={item.src} className={styles.image} alt='cat-image' />
+                                <img src={item.url} className={styles.image} alt='cat-image' />
                             </div>
                         ))}
                     </div>
                     <div className={`${styles.grid} ${styles.grid__reverseColumns}`}>
                         {imgs.slice(15).map((item, i) => (
                             <div key={i} className={styles.gridItem}>
-                                <img src={item.src} className={styles.image} alt='cat-image' />
+                                <img src={item.url} className={styles.image} alt='cat-image' />
                             </div>
                         ))}
                     </div>
