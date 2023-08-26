@@ -1,8 +1,29 @@
 import styles from "./upload-modal.module.sass";
+import Image from "next/image";
 import Message from "../message/Message";
+import { useState } from "react";
+import { uploadCat } from "@/services/http-service";
 
 const UploadModal = ({ isOpen, closeModal }: any) => {
     if (!isOpen) return null;
+    const [file, setFile] = useState<any>(null);
+    const [fileUrl, setFileUrl] = useState<any>(null);
+    const [result, setResult] = useState<any>("");
+    const [isDragOver, setIsDragOver] = useState(false);
+
+    const getFile = (e: any) => {
+        setResult("");
+        setFile(e);
+        setFileUrl(URL.createObjectURL(e));
+    };
+
+    const uploadFile = async () => {
+        const data = await uploadCat(file);
+        setResult(data);
+        if (data === "success") {
+            setFile(null);
+        }
+    };
 
     return (
         <>
@@ -18,16 +39,50 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
                     </span>
                     &nbsp;or face deletion.
                 </h3>
-                <div className={styles.banner}>
-                    <h3 className={styles.sign}>
+                <label
+                    className={`${styles.banner} ${isDragOver && styles.banner_dragOver}`}
+                    onDragEnter={e => {
+                        e.preventDefault();
+                        setIsDragOver(true);
+                    }}
+                    onDragOver={e => {
+                        e.preventDefault();
+                        setIsDragOver(true);
+                    }}
+                    onDragLeave={e => {
+                        e.preventDefault();
+                        setIsDragOver(false);
+                    }}
+                    onDrop={e => {
+                        e.preventDefault();
+                        setIsDragOver(false);
+                        getFile(e.dataTransfer.files[0]);
+                    }}
+                >
+                    <input type='file' onChange={(e: any) => getFile(e.target.files[0])} />
+                    <h3 className={`${styles.sign} ${fileUrl && styles.hidden}`}>
                         <span>Drag here</span> your file or <span>Click here</span> to upload
                     </h3>
-                </div>
-                <p className={styles.result}>No file selected</p>
-                <p className={styles.result}>Image File Name: cat-puppy-on-garden--1586966191.jpg</p>
-                <button className={styles.uploadBtn}></button>
-                <Message successText="Thanks for the Upload - Cat found!" />
-                <Message errorText="No Cat found - try a different one" />
+                    {file && (
+                        <div className={`${styles.bannerImg} ${result === "failed" && styles.bannerImg_error}`}>
+                            <Image src={fileUrl} height={20} width={20} alt='banner' />
+                        </div>
+                    )}
+                </label>
+                {file ? (
+                    <>
+                        <p className={styles.result}>Image File Name: {file.name}</p>
+                        {!result && (
+                            <button className={styles.uploadBtn} onClick={uploadFile}>
+                                Upload Photo
+                            </button>
+                        )}
+                    </>
+                ) : (
+                    <p className={styles.result}>No file selected</p>
+                )}
+                {result && result === "success" ? <Message successText='Thanks for the Upload - Cat found!' /> : null}
+                {result && result === "failed" ? <Message errorText='No Cat found - try a different one' /> : null}
             </div>
             <div className={styles.overlay} onClick={() => closeModal()}></div>
         </>

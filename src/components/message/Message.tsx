@@ -19,7 +19,7 @@ const Message: FC<MessageProps> = ({ text, successText, errorText, like, dislike
             {text && <p className={styles.textItem}>{text}</p>}
             {(successText || errorText) && (
                 <>
-                    <Image src={`${successText ? '/images/tick.svg' : '/images/error.svg'}`}   height={20} width={20} alt='icon' />
+                    <Image src={`${successText ? '/images/tick.svg' : '/images/error.svg'}`} height={20} width={20} alt='icon' />
                     <p className={styles.textItem}>{successText || errorText}</p>
                 </>
             )}

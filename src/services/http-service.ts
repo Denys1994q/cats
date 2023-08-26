@@ -158,3 +158,18 @@ export const fetchCatOnName = async (name: string) => {
         return imgsMod;
     }
 };
+
+export const uploadCat = async (file: any) => {
+    let formdata = new FormData();
+    formdata.append("file", file);
+    const options = {
+        method: 'POST',
+        body: formdata,
+        headers: {'x-api-key': '3c71318c-32fa-4b4a-a5bf-f888e6bf7e60'},
+      };
+    const {status} = await fetch('https://api.thecatapi.com/v1/images/upload', options);
+    let result;
+    if (status === 201) {result = 'success'} 
+    if (status === 400) {result = 'failed'}  
+    return result
+}
