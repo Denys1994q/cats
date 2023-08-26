@@ -52,7 +52,8 @@ type BreedOption = {
     limit?: string;
     breed?: string;
     order?: string;
-    type?: string
+    type?: string;
+    cache?: boolean
 }
 
 
@@ -78,7 +79,7 @@ export const fetchOneCatBreed = async ({ limit, breed, order }: BreedOption) => 
     return data;
 };
 
-export const fetchAllCatBreeds = async ({ limit, order }: BreedOption) => {
+export const fetchAllCatBreeds = async ({ limit = '5', order = 'asc' }: BreedOption) => {
     const res = await fetch(`https://api.thecatapi.com/v1/breeds?limit=${limit}&order=${order}&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`);
     const data = await res.json();
 
@@ -100,10 +101,32 @@ export const fetchBreedNames = async () => {
     return data;
 };
 
-export const fetchCatImgs = async ({ limit, breed, order, type }: BreedOption) => {
+export const fetchCatImgs = async ({ limit = '5', breed = '', order = 'random', type = 'static', cache = true }: BreedOption) => {
+    if (cache) {
+        const res = await fetch(
+            `https://api.thecatapi.com/v1/images/search?limit=${limit}&mime_types=${type}&breed_ids=${breed}&order=${order}&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`
+        );
+        const data = await res.json();
+        return data;
+    } else {
+        const res = await fetch(
+            `https://api.thecatapi.com/v1/images/search?limit=${limit}&mime_types=${type}&breed_ids=${breed}&order=${order}&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`, {
+                cache: "no-store",
+            }
+        );
+        const data = await res.json();
+        return data;
+    }
+};
+
+export const fetchCatOnName = async (name: string) => {
     const res = await fetch(
-        `https://api.thecatapi.com/v1/images/search?limit=${limit}&mime_types=${type}&breed_ids=${breed}&order=${order}&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`
+        `https://api.thecatapi.com/v1/breeds/search?q=${name}`
     );
     const data = await res.json();
-    return data;
+    if (data && data.length > 0 && data[0].id) {
+        const imageRes = await fetch(`https://api.thecatapi.com/v1/images/search?breed_ids=${data[0].id}&limit=25&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`);
+        const imageData = await imageRes.json();
+        return imageData;
+    }
 };

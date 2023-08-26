@@ -7,15 +7,14 @@ import NavBtn from "@/components/nav-btn/Nav-btn";
 import Select from "@/components/select/Select";
 import GridPanel from "../grid-panel/Grid-panel";
 import styles from "./breeds-panel.module.sass";
-import { fetchAllCatBreeds, fetchOneCatBreed, fetchBreedNames } from "@/services/http-service";
+import { fetchAllCatBreeds, fetchOneCatBreed } from "@/services/http-service";
 
-const BreedsPanel: FC<any> = ({ data }) => {
+const BreedsPanel: FC<any> = ({ data, breedNames }) => {
     const [breed, setBreed] = useState("");
     const [limit, setLimit] = useState("5");
     const [order, setOrder] = useState("asc");
     const [imgs, setImgs] = useState(data);
     const [afterfirstLoad, setAfterFirstLoad] = useState(false);
-    const [breedNames, setBreedNames] = useState([]);
 
     // список селектів лімітів
     const limits = [
@@ -27,12 +26,6 @@ const BreedsPanel: FC<any> = ({ data }) => {
 
     useEffect(() => {
         setAfterFirstLoad(true);
-        const fetchData = async () => {
-            const data = await fetchBreedNames();
-            data.unshift({ id: "all", name: "All breeds" });
-            setBreedNames(data);
-        };
-        fetchData();
     }, []);
 
     useEffect(() => {
