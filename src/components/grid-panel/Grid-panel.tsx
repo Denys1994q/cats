@@ -1,10 +1,12 @@
 import { FC } from "react";
 import styles from "./grid-panel.module.sass";
-// import 
+import Link from "next/link";
+// import
 
 interface Img {
     url: string;
-    
+    name: string;
+    id: string;
 }
 
 interface GridPanelProps {
@@ -18,6 +20,9 @@ const GridPanel: FC<GridPanelProps> = ({ imgs }) => {
                 {imgs.slice(0, 5).map((item, i) => (
                     <div key={i} className={styles.gridItem}>
                         <img src={item.url} className={styles.image} alt='cat-image' />
+                        <Link href={`/breeds/${item.id.toLowerCase()}`}>
+                            <div className={styles.imageText}>{item.name}</div>
+                        </Link>
                     </div>
                 ))}
             </div>
@@ -27,6 +32,9 @@ const GridPanel: FC<GridPanelProps> = ({ imgs }) => {
                         {imgs.slice(5, 10).map((item, i) => (
                             <div key={i} className={styles.gridItem}>
                                 <img src={item.url} className={styles.image} alt='cat-image' />
+                                <Link href={`/breeds/${item.id.toLowerCase()}`}>
+                                    <div className={styles.imageText}>{item.name}</div>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -34,6 +42,9 @@ const GridPanel: FC<GridPanelProps> = ({ imgs }) => {
                         {imgs.slice(10, 15).map((item, i) => (
                             <div key={i} className={styles.gridItem}>
                                 <img src={item.url} className={styles.image} alt='cat-image' />
+                                <Link href={`/breeds/${item.id.toLowerCase()}`}>
+                                    <div className={styles.imageText}>{item.name}</div>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -41,6 +52,9 @@ const GridPanel: FC<GridPanelProps> = ({ imgs }) => {
                         {imgs.slice(15).map((item, i) => (
                             <div key={i} className={styles.gridItem}>
                                 <img src={item.url} className={styles.image} alt='cat-image' />
+                                <Link href={`/breeds/${item.id.toLowerCase()}`}>
+                                    <div className={styles.imageText}>{item.name}</div>
+                                </Link>
                             </div>
                         ))}
                     </div>

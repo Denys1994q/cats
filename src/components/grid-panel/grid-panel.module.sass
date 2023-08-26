@@ -43,50 +43,78 @@
         overflow: hidden
         width: 420px
         height: 295px
-  
+
 .gridItem
     position: relative
     overflow: hidden
     width: 200px
     height: 140px
-
-    &-item-tex
+    &:hover::after
+        content: ""
+        display: block
         position: absolute
         top: 0
         left: 0
         width: 100%
         height: 100%
-        background-color: rgba(255, 134, 142, 0.6)
-        opacity: 0
-
-    &-item-tex-fav
-        position: absolute
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
-        background-color: rgba(255, 134, 142, 0.6)
-        opacity: 1
-
-    &-item-tex:hover
-        opacity: 1
-
-    &-item-text
-        position: absolute
-        bottom: 10px
-        left: 50%
-        transform: translate(-50%)
-        width: 180px
-        height: 34px
-        background: #FFFFFF
-        border-radius: 10px
-        color: #FF868E
-        display: flex
-        justify-content: center
-        align-items: center
-
+        background: rgba(255, 134, 142, 0.60)
+        opacity: .7
+        border-radius: 20px
+    &:hover .imageText
+        display: block
 .image
     border-radius: 20px
     object-fit: cover
     width: 100%
     height: 100%
+.imageText
+    display: none
+    position: absolute
+    bottom: 5%
+    left: 50%
+    transform: translate(-50%)
+    border-radius: 10px
+    background: #FFF
+    padding: 5px
+    color: #FF868E
+    text-align: center
+    font-size: 16px
+    line-height: 24px
+    z-index: 2
+    word-wrap: break-word
+    max-width: 180px
+
+//     &-item-tex
+//         position: absolute
+//         top: 0
+//         left: 0
+//         width: 100%
+//         height: 100%
+//         background-color: rgba(255, 134, 142, 0.6)
+//         opacity: 0
+
+//     &-item-tex-fav
+//         position: absolute
+//         top: 0
+//         left: 0
+//         width: 100%
+//         height: 100%
+//         background-color: rgba(255, 134, 142, 0.6)
+//         opacity: 1
+
+//     &-item-tex:hover
+//         opacity: 1
+
+//     &-item-text
+//         position: absolute
+//         bottom: 10px
+//         left: 50%
+//         transform: translate(-50%)
+//         width: 180px
+//         height: 34px
+//         background: #FFFFFF
+//         border-radius: 10px
+//         color: #FF868E
+//         display: flex
+//         justify-content: center
+//         align-items: center

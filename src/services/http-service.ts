@@ -75,8 +75,21 @@ export const fetchOneCatBreed = async ({ limit, breed, order }: BreedOption) => 
     const res = await fetch(
         `https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${breed}&order=${order}&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`
     );
-    const data = await res.json();
-    return data;
+    const imgs = await res.json();
+    const imgsMod = imgs.map((item: any) => {
+        return {
+            url: item.url,
+            name: item.breeds[0].name,
+            id: item.breeds[0].id,
+            breeds: item.breeds[0],
+            temperament: item.breeds[0].temperament,
+            origin: item.breeds[0].origin,
+            weight: item.breeds[0].weight.imperial,
+            life_span: item.breeds[0].life_span,
+            description: item.breeds[0].description,
+        }
+    })
+    return imgsMod;
 };
 
 export const fetchAllCatBreeds = async ({ limit = '5', order = 'asc' }: BreedOption) => {
@@ -88,9 +101,15 @@ export const fetchAllCatBreeds = async ({ limit = '5', order = 'asc' }: BreedOpt
         const imageData = await imageRes.json();
         return imageData;
     });
-
     const imgs = await Promise.all(imagePromises);
-    return imgs;
+    const imgsMod = imgs.map((item: any) => {
+        return {
+            url: item.url,
+            name: item.breeds[0].name,
+            id: item.breeds[0].id
+        }
+    })
+    return imgsMod;
 };
 
 export const fetchBreedNames = async () => {
@@ -127,6 +146,15 @@ export const fetchCatOnName = async (name: string) => {
     if (data && data.length > 0 && data[0].id) {
         const imageRes = await fetch(`https://api.thecatapi.com/v1/images/search?breed_ids=${data[0].id}&limit=25&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`);
         const imageData = await imageRes.json();
-        return imageData;
+        
+        const imgsMod = imageData.map((item: any) => {
+            return {
+                url: item.url,
+                name: item.breeds[0].name,
+                id: item.breeds[0].id,
+                breeds: item.breeds[0]
+            }
+        })
+        return imgsMod;
     }
 };

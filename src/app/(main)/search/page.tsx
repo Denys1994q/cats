@@ -10,9 +10,9 @@ import { fetchCatOnName } from "@/services/http-service";
 
 export default function Page() {
     const searchParams = useSearchParams();
-    const [data, setData] = useState([]);
     const searchName = searchParams.get("name");
-
+    const [data, setData] = useState<any>([]);
+    
     useEffect(() => {
         const fetchData = async () => {
             if (searchName) {
@@ -30,7 +30,7 @@ export default function Page() {
             </div>
             <div>
                 <p className={styles.text}>
-                    search results for: <span>{searchName}</span>{" "}
+                    search results for: <span>{data && data.length > 0 ? data[0].name : searchName}</span>{" "}
                 </p>
                 {data && data.length > 0 ? <GridPanel imgs={data} /> : <Message text='No item found' />}
             </div>

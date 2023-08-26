@@ -10,7 +10,7 @@ import styles from "./breeds-panel.module.sass";
 import { fetchAllCatBreeds, fetchOneCatBreed } from "@/services/http-service";
 
 const BreedsPanel: FC<any> = ({ data, breedNames }) => {
-    const [breed, setBreed] = useState("");
+    const [breed, setBreed] = useState("all");
     const [limit, setLimit] = useState("5");
     const [order, setOrder] = useState("asc");
     const [imgs, setImgs] = useState(data);
