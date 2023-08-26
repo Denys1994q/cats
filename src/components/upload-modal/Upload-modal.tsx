@@ -3,6 +3,7 @@ import Image from "next/image";
 import Message from "../message/Message";
 import { useState } from "react";
 import { uploadCat } from "@/services/http-service";
+import Spinner from "../spinner/Spinner";
 
 const UploadModal = ({ isOpen, closeModal }: any) => {
     if (!isOpen) return null;
@@ -10,19 +11,30 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
     const [fileUrl, setFileUrl] = useState<any>(null);
     const [result, setResult] = useState<any>("");
     const [isDragOver, setIsDragOver] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [typeError, setTypeError] = useState(false);
 
     const getFile = (e: any) => {
-        setResult("");
-        setFile(e);
-        setFileUrl(URL.createObjectURL(e));
+        const allowedTypes = ["image/jpeg", "image/png"];
+        if (allowedTypes.includes(e.type)) {
+            setTypeError(false)
+            setResult("");
+            setFile(e);
+            setFileUrl(URL.createObjectURL(e));
+        } else {
+            setTypeError(true)
+            return;
+        }
     };
 
     const uploadFile = async () => {
+        setLoading(true);
         const data = await uploadCat(file);
         setResult(data);
         if (data === "success") {
             setFile(null);
         }
+        setLoading(false);
     };
 
     return (
@@ -39,6 +51,7 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
                     </span>
                     &nbsp;or face deletion.
                 </h3>
+                {typeError && <h3 className={styles.typeError}>File must be .jpg or .png format</h3>}
                 <label
                     className={`${styles.banner} ${isDragOver && styles.banner_dragOver}`}
                     onDragEnter={e => {
@@ -59,7 +72,11 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
                         getFile(e.dataTransfer.files[0]);
                     }}
                 >
-                    <input type='file' onChange={(e: any) => getFile(e.target.files[0])} />
+                    <input
+                        type='file'
+                        accept='image/jpeg, image/png'
+                        onChange={(e: any) => getFile(e.target.files[0])}
+                    />
                     <h3 className={`${styles.sign} ${fileUrl && styles.hidden}`}>
                         <span>Drag here</span> your file or <span>Click here</span> to upload
                     </h3>
@@ -69,12 +86,19 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
                         </div>
                     )}
                 </label>
-                {file ? (
+                {file && !typeError ? (
                     <>
                         <p className={styles.result}>Image File Name: {file.name}</p>
                         {!result && (
                             <button className={styles.uploadBtn} onClick={uploadFile}>
-                                Upload Photo
+                                {loading ? (
+                                    <span className={styles.spinnerWrapper}>
+                                        <Spinner />
+                                        Uploading
+                                    </span>
+                                ) : (
+                                    "Upload Photo"
+                                )}
                             </button>
                         )}
                     </>

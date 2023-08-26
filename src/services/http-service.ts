@@ -56,21 +56,22 @@ type BreedOption = {
     cache?: boolean
 }
 
-
-export async function fetchOneCat(options: { cache: boolean }): Promise<Cat[]> {
-    if (options.cache) {
-        const res = await fetch('https://api.thecatapi.com/v1/images/search');
-        const data: Cat[] = await res.json();
-        return data;
-    } else {
+// зображення одного кота
+export async function fetchOneCat(options?: { cache?: boolean }): Promise<Cat[]> {
+    if (options && options.cache === false) {
         const res = await fetch("https://api.thecatapi.com/v1/images/search", {
             cache: "no-store",
         });
         const data: Cat[] = await res.json();
         return data;
+    } else {
+        const res = await fetch('https://api.thecatapi.com/v1/images/search');
+        const data: Cat[] = await res.json();
+        return data;
     }
 }
 
+// зображення котів однієї породи
 export const fetchOneCatBreed = async ({ limit, breed, order }: BreedOption) => {
     const res = await fetch(
         `https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${breed}&order=${order}&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`
@@ -92,6 +93,7 @@ export const fetchOneCatBreed = async ({ limit, breed, order }: BreedOption) => 
     return imgsMod;
 };
 
+// зображення котів всіх порід
 export const fetchAllCatBreeds = async ({ limit = '5', order = 'asc' }: BreedOption) => {
     const res = await fetch(`https://api.thecatapi.com/v1/breeds?limit=${limit}&order=${order}&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`);
     const data = await res.json();
@@ -112,6 +114,7 @@ export const fetchAllCatBreeds = async ({ limit = '5', order = 'asc' }: BreedOpt
     return imgsMod;
 };
 
+// всі наявні породи
 export const fetchBreedNames = async () => {
     const res = await fetch(
         'https://api.thecatapi.com/v1/breeds'
@@ -120,6 +123,7 @@ export const fetchBreedNames = async () => {
     return data;
 };
 
+// зображення різних котів
 export const fetchCatImgs = async ({ limit = '5', breed = '', order = 'random', type = 'static', cache = true }: BreedOption) => {
     if (cache) {
         const res = await fetch(
@@ -138,6 +142,7 @@ export const fetchCatImgs = async ({ limit = '5', breed = '', order = 'random', 
     }
 };
 
+// пошук котів за назвою породи
 export const fetchCatOnName = async (name: string) => {
     const res = await fetch(
         `https://api.thecatapi.com/v1/breeds/search?q=${name}`
@@ -159,6 +164,7 @@ export const fetchCatOnName = async (name: string) => {
     }
 };
 
+// завантажити зображення кота
 export const uploadCat = async (file: any) => {
     let formdata = new FormData();
     formdata.append("file", file);
@@ -166,10 +172,26 @@ export const uploadCat = async (file: any) => {
         method: 'POST',
         body: formdata,
         headers: {'x-api-key': '3c71318c-32fa-4b4a-a5bf-f888e6bf7e60'},
-      };
+    };
     const {status} = await fetch('https://api.thecatapi.com/v1/images/upload', options);
     let result;
     if (status === 201) {result = 'success'} 
     if (status === 400) {result = 'failed'}  
     return result
 }
+
+// проголосувати за зображення кота
+export const addVote = async ({vote, imageId}: any) => {
+    const body = {
+        image_id: imageId,
+        value: vote
+    }
+    const options: any = {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {'x-api-key': '3c71318c-32fa-4b4a-a5bf-f888e6bf7e60', 'Content-Type': 'application/json'}
+    };
+    fetch('https://api.thecatapi.com/v1/votes', options);
+}
+
+// 

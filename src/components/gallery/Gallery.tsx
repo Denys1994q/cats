@@ -19,7 +19,7 @@ interface GalleryProps {
 const Gallery: FC<GalleryProps> = ({initialData, breedNames}) => {
     const [showModal, setShowModal] = useState(false);
     const [breed, setBreed] = useState("");
-    const [limit, setLimit] = useState("");
+    const [limit, setLimit] = useState("5");
     const [type, setType] = useState("");
     const [order, setOrder] = useState("");
     const [imgs, setImgs] = useState(initialData);
