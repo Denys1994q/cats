@@ -2,7 +2,7 @@ import styles from "./upload-modal.module.sass";
 import Image from "next/image";
 import Message from "../message/Message";
 import { useState } from "react";
-import { uploadCat } from "@/services/http-service";
+import { uploadCat } from "../../services/http-service";
 import Spinner from "../spinner/Spinner";
 import Error from "../error/Error";
 

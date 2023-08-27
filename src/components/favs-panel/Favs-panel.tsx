@@ -3,7 +3,7 @@
 import { FC, useEffect, useState } from "react";
 import GridPanel from "../grid-panel/Grid-panel";
 import Message from "../message/Message";
-import { deleteFavCat, fetchVotedCats } from "@/services/http-service";
+import { deleteFavCat, fetchVotedCats } from "../../services/http-service";
 import Error from "../error/Error";
 
 interface FavPanelProps {

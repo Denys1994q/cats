@@ -1,5 +1,5 @@
 import BreedsPanel from "../../../components/breeds-panel/Breeds-panel";
-import { fetchAllCatBreeds, fetchBreedNames } from "@/services/http-service";
+import { fetchAllCatBreeds, fetchBreedNames } from "../../../services/http-service";
 
 export default async function Page() {
     const imgs = await fetchAllCatBreeds({});

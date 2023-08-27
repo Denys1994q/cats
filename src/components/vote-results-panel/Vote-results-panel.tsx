@@ -3,7 +3,7 @@
 import { FC, useState, useEffect } from "react";
 import GridPanel from "../grid-panel/Grid-panel";
 import Message from "../message/Message";
-import { fetchVotedCats } from "@/services/http-service";
+import { fetchVotedCats } from "../../services/http-service";
 import Error from "../error/Error";
 
 interface VoteResultsPanelProps {

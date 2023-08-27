@@ -7,9 +7,9 @@ import { useState } from "react";
 import NavBtn from "../../components/nav-btn/Nav-btn";
 import GridPanel from "../../components/grid-panel/Grid-panel";
 import Modal from "../../components/upload-modal/Upload-modal";
-import { fetchCatImgs } from "@/services/http-service";
+import { fetchCatImgs } from "../../services/http-service";
 import Message from "../../components/message/Message";
-import { addVote, deleteFavCat } from "@/services/http-service";
+import { addVote, deleteFavCat } from "../../services/http-service";
 import Spinner from "../spinner/Spinner";
 import Error from "../error/Error";
 

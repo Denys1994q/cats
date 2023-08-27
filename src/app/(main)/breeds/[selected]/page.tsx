@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import styles from "./page.module.sass";
 import Carousel from "../../../../components/carousel/Carousel";
 import { useEffect } from "react";
-import { fetchOneCatBreed } from "@/services/http-service";
+import { fetchOneCatBreed } from "../../../../services/http-service";
 import { useState } from "react";
 import Error from "../../../../components/error/Error";
 

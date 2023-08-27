@@ -6,7 +6,7 @@ import GridPanel from "../../../components/grid-panel/Grid-panel";
 import Message from "../../../components/message/Message";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { fetchCatOnName } from "@/services/http-service";
+import { fetchCatOnName } from "../../../services/http-service";
 import Error from "../../../components/error/Error";
 import Spinner from "../../../components/spinner/Spinner";
 

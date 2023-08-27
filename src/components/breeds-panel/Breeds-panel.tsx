@@ -5,7 +5,7 @@ import NavBtn from "../../components/nav-btn/Nav-btn";
 import Select from "../../components/select/Select";
 import GridPanel from "../grid-panel/Grid-panel";
 import styles from "./breeds-panel.module.sass";
-import { fetchAllCatBreeds, fetchOneCatBreed } from "@/services/http-service";
+import { fetchAllCatBreeds, fetchOneCatBreed } from "../../services/http-service";
 import Spinner from "../spinner/Spinner";
 import Error from "../error/Error";
 
