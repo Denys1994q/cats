@@ -8,24 +8,26 @@ import { addVote } from "@/services/http-service";
 import { fetchOneCat } from "@/services/http-service";
 
 interface VotingPanelProps {
-    image: string;
+    image: any;
     id: string;
 }
 
 const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
-    const [img, setImg] = useState(image);
+    const [img, setImg] = useState<any>(image);
     const [logs, setLogs] = useState<any>([]);
+    const [isFav, setIsFav] = useState(false)
 
-    const vote = async (result: number, imageId: string) => {
+    const vote = async (result: string, imageId: string) => {
+        if (result === 'fav') {setIsFav(true)}
         const { hours, minutes } = getCurrentTime();
         addVote({ vote: result, imageId: imageId });
         setLogs((logs: any) => [
             ...logs,
-            { time: `${hours}:${minutes}`, id: imageId, vote: result === 1 ? "like" : "dislike" },
+            { time: `${hours}:${minutes}`, id: imageId, vote: result },
         ]);
 
         const data: any = await fetchOneCat();
-        setImg(data[0].url);
+        setImg(data);
     };
 
     const getCurrentTime = () => {
@@ -38,16 +40,18 @@ const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
     return (
         <div className={styles.panel}>
             <div className={styles.panel__imgWrapper}>
-                <Image src={img} width={640} height={360} className={styles.panel__img} alt='cat' />
+                <Image src={img[0].url} width={640} height={360} className={styles.panel__img} alt='cat' />
                 <div className={styles.panel__tools}>
                     <button
-                        className={`${styles.panel__btn} ${styles.panel__btnStart}`}
-                        onClick={() => vote(1, id)}
+                        className={`${styles.panel__btn} ${styles.panel__btnLike}`}
+                        onClick={() => vote('like', img[0].id)}
                     ></button>
-                    <button className={`${styles.panel__btn} ${styles.panel__btnMiddle}`}></button>
                     <button
-                        className={`${styles.panel__btn} ${styles.panel__btnEnd}`}
-                        onClick={() => vote(-1, id)}
+                        className={`${styles.panel__btn} ${styles.panel__btnFav} ${isFav && styles.panel__btnFav_active}`} onClick={() => vote('fav', img[0].id)}
+                    ></button>
+                    <button
+                        className={`${styles.panel__btn} ${styles.panel__btnDis}`}
+                        onClick={() => vote('dislike', img[0].id)}
                     ></button>
                 </div>
             </div>
@@ -65,12 +69,14 @@ const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
                                 <Message dislike time={log.time} id={log.id} />
                             </li>
                         );
+                    } else if (log.vote === "fav") {
+                        return (
+                            <li>
+                                <Message favourite time={log.time} id={log.id} />
+                            </li>
+                        );
                     }
                 })}
-
-                {/* <li>
-                    <Message favourite time='10:22' id='fQSunHvl8' />
-                </li>  */}
             </ul>
         </div>
     );

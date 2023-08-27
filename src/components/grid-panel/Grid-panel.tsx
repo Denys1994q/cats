@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import styles from "./grid-panel.module.sass";
 import Link from "next/link";
 // import

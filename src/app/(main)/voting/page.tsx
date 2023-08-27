@@ -11,7 +11,7 @@ export default async function Page() {
             <div className={styles.btnWrapper}>
                 <NavBtn text={"voting"} />
             </div>
-            <VotingPanel image={data[0].url} id={data[0].id} />
+            <VotingPanel image={data} id={data[0].id} />
         </section>
     );
 }

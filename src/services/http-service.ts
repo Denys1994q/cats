@@ -184,7 +184,8 @@ export const uploadCat = async (file: any) => {
 export const addVote = async ({vote, imageId}: any) => {
     const body = {
         image_id: imageId,
-        value: vote
+        sub_id: "denys_rybachok",
+        value: vote === 'like' ? 1 : -1
     }
     const options: any = {
         method: 'POST',
@@ -194,4 +195,33 @@ export const addVote = async ({vote, imageId}: any) => {
     fetch('https://api.thecatapi.com/v1/votes', options);
 }
 
-// 
+// отримати зображення котів, за яких було проголосовано (лайки і дізлайки)
+export async function fetchVotedCats(options: {vote: string}) {   
+    const imageRes = await fetch('http://api.thecatapi.com/v1/votes?sub_id=denys_rybachok&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60', {
+        cache: "no-store",
+    });
+    const imageData = await imageRes.json();
+
+    if (options.vote === 'like') {
+        const imgsMod = imageData.filter((item: any) => item.value === 1).map((item: any) => {
+            return {
+                url: item.image.url,
+                name: item.image_id, 
+                id: item.image_id, 
+            }
+        })
+        return imgsMod;
+    } else if (options.vote === 'dislike') {
+        const imgsMod = imageData.filter((item: any) => item.value === -1).map((item: any) => {
+            return {
+                url: item.image.url,
+                name: item.image_id, 
+                id: item.image_id, 
+            }
+        })
+        return imgsMod;
+    } else if (options.vote === 'fav') {
+        return []
+    }
+};
+
