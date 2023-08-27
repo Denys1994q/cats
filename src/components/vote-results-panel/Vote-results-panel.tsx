@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { FC, useState, useEffect } from "react";
 import GridPanel from "../grid-panel/Grid-panel";
@@ -8,11 +8,11 @@ import Error from "../error/Error";
 
 interface VoteResultsPanelProps {
     initialData: any;
-    dislikes?: boolean
+    dislikes?: boolean;
 }
 
 const VoteResultsPanel: FC<VoteResultsPanelProps> = ({ initialData, dislikes }) => {
-    const [imgs, setImgs] = useState(initialData);
+    const [imgs, setImgs] = useState([]);
     const [error, setError] = useState(false);
 
     useEffect(() => {
