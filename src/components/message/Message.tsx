@@ -61,7 +61,7 @@ const Message: FC<MessageProps> = ({
                         </div>
                     </div>
                     <div className={styles.iconItem}>
-                        <Image src='/images/dislike-default.svg' height={20} width={20} alt='icon' />
+                        <Image src='/images/dislike-orange.svg' height={20} width={20} alt='icon' />
                     </div>
                 </>
             )}

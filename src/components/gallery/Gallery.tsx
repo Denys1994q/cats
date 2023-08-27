@@ -1,36 +1,51 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import styles from "./gallery.module.sass";
 import Select from "@/components/select/Select";
-import {  useState } from "react";
+import { useState } from "react";
 import NavBtn from "@/components/nav-btn/Nav-btn";
 import Image from "next/image";
 import GridPanel from "@/components/grid-panel/Grid-panel";
 import Modal from "@/components/upload-modal/Upload-modal";
 import { fetchCatImgs } from "@/services/http-service";
 import Message from "@/components/message/Message";
+import { addVote, deleteFavCat } from "@/services/http-service";
+import Spinner from "../spinner/Spinner";
+import Error from "../error/Error";
 
 interface GalleryProps {
-    initialData: any;
-    breedNames: any
+    breedNames: any;
 }
 
-const Gallery: FC<GalleryProps> = ({initialData, breedNames}) => {
+const Gallery: FC<GalleryProps> = ({ breedNames }) => {
     const [showModal, setShowModal] = useState(false);
     const [breed, setBreed] = useState("");
     const [limit, setLimit] = useState("5");
-    const [type, setType] = useState("");
-    const [order, setOrder] = useState("");
-    const [imgs, setImgs] = useState(initialData);
+    const [type, setType] = useState("gif,jpg,png");
+    const [order, setOrder] = useState("random");
+    const [imgs, setImgs] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        setLoading(true);
+        const response: any = await fetchCatImgs({ limit, order, type, breed });
+        setLoading(false);
+        if (response !== "error") {
+            setError(false);
+            setImgs(response);
+        } else {
+            setError(true);
+        }
+    };
 
     const closeModal = () => {
         setShowModal(false);
-    };
-
-    const refreshData = async () => {
-        const data = await fetchCatImgs({ limit, order, type, breed });
-        setImgs(data);
     };
 
     const onSelect = (id: string, value: any) => {
@@ -42,6 +57,27 @@ const Gallery: FC<GalleryProps> = ({initialData, breedNames}) => {
             setType(value);
         } else if (id === "breed") {
             setBreed(value);
+        }
+    };
+
+    const onGalleryImgClick = async (id: string) => {
+        const foundedCat: any = imgs.find((cat: any) => cat.id === id);
+        if (foundedCat && foundedCat.isFav) {
+            const delResult = await deleteFavCat(foundedCat.favId);
+            if (delResult !== "error") {
+                setImgs((prevImgs: any) => {
+                    return prevImgs.map((img: any) => (img.id === id ? { ...img, isFav: false } : img));
+                });
+            }
+        } else {
+            const voteResult = await addVote({ vote: "fav", imageId: id });
+            if (voteResult !== "error") {
+                setImgs((prevImgs: any) => {
+                    return prevImgs.map((img: any) =>
+                        img.id === id ? { ...img, isFav: true, favId: voteResult } : img
+                    );
+                });
+            }
         }
     };
 
@@ -102,12 +138,13 @@ const Gallery: FC<GalleryProps> = ({initialData, breedNames}) => {
                                     onSelect={onSelect}
                                 />
                             </div>
-                            <button className={styles.refreshBtn} onClick={refreshData}></button>
+                            <button className={styles.refreshBtn} onClick={fetchData}></button>
                         </div>
                     </div>
                     <div>
-                        <GridPanel imgs={imgs} />
-                        {imgs.length === 0 && <Message text='No item found' />}
+                        {loading && <Spinner secondary />}
+                        {error ? <Error /> : <GridPanel imgs={imgs} favs handleClick={onGalleryImgClick} />}
+                        {imgs.length === 0 && <Message text='No item found' /> }
                     </div>
                 </section>
             )}

@@ -8,7 +8,7 @@ export default async function Page() {
 
     return (
         <section>
-            <BreedsPanel data={imgs} breedNames={breedNames} />
+            <BreedsPanel initialData={imgs} breedNames={breedNames} />
         </section>
     );
 }

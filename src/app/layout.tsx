@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <p className='nav-panel__subtitle'>Welcome to MacPaw Bootcamp 2023</p>
                         <NavMenu links={menuLinks} heading='Lets start using The Cat API' />
                     </div>
-                    <div className='main-container__content'>{children}</div>
+                    <div className='main-container__content'>{children }</div>
                 </div>
             </body>
         </html>

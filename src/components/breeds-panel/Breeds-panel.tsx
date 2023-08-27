@@ -8,13 +8,17 @@ import Select from "@/components/select/Select";
 import GridPanel from "../grid-panel/Grid-panel";
 import styles from "./breeds-panel.module.sass";
 import { fetchAllCatBreeds, fetchOneCatBreed } from "@/services/http-service";
+import Spinner from "../spinner/Spinner";
+import Error from "../error/Error";
 
-const BreedsPanel: FC<any> = ({ data, breedNames }) => {
+const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
     const [breed, setBreed] = useState("all");
     const [limit, setLimit] = useState("5");
     const [order, setOrder] = useState("asc");
-    const [imgs, setImgs] = useState(data);
+    const [imgs, setImgs] = useState(initialData);
     const [afterfirstLoad, setAfterFirstLoad] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     // список селектів лімітів
     const limits = [
@@ -30,13 +34,26 @@ const BreedsPanel: FC<any> = ({ data, breedNames }) => {
 
     useEffect(() => {
         if (afterfirstLoad) {
+            setLoading(true);
             const fetchData = async () => {
                 if (breed === "all") {
-                    const imgs: any = await fetchAllCatBreeds({ limit, order });
-                    setImgs(imgs);
+                    const response: any = await fetchAllCatBreeds({ limit, order });
+                    if (response !== "error") {
+                        setLoading(false);
+                        setImgs(response);
+                    } else {
+                        setLoading(false);
+                        setError(true);
+                    }
                 } else {
-                    const imgs = await fetchOneCatBreed({ limit, breed, order });
-                    setImgs(imgs);
+                    const response = await fetchOneCatBreed({ limit, breed, order });
+                    if (response !== "error") {
+                        setLoading(false);
+                        setImgs(response);
+                    } else {
+                        setLoading(false);
+                        setError(true);
+                    }
                 }
             };
             fetchData();
@@ -77,7 +94,9 @@ const BreedsPanel: FC<any> = ({ data, breedNames }) => {
                 </div>
             </div>
             <div>
-                <GridPanel imgs={imgs} />
+                {loading && <Spinner secondary />}
+                {(error || initialData === "error") && !loading ? <Error /> : null}
+                {initialData !== "error" && !error &&!loading ? <GridPanel imgs={imgs} breeds /> : null}
             </div>
         </>
     );

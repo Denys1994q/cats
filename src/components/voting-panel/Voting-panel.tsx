@@ -1,31 +1,42 @@
 "use client";
 
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import Image from "next/image";
 import styles from "./voting-panel.module.sass";
 import Message from "../message/Message";
 import { addVote } from "@/services/http-service";
 import { fetchOneCat, deleteFavCat } from "@/services/http-service";
 import Spinner from "../spinner/Spinner";
+import Error from "../error/Error";
 
-interface VotingPanelProps {
-    image: any;
-    id: string;
-}
-
-const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
-    const [img, setImg] = useState<any>(image);
+const VotingPanel: FC = () => {
+    const [img, setImg] = useState<any>(null);
     const [logs, setLogs] = useState<any>([]);
     const [favId, setFavId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        setLoading(true);
+        const response: any = await fetchOneCat();
+        setLoading(false);
+        if (response !== "error") {
+            setImg(response);
+        } else {
+            setError(true);
+        }
+    };
 
     const vote = async (result: string, imageId: string) => {
         setLoading(true);
         const { hours, minutes } = getCurrentTime();
 
         if (favId && result === "fav") {
-            removeFromFavs(favId, imageId)
+            removeFromFavs(favId, imageId);
         } else {
             const voteResult = await addVote({ vote: result, imageId: imageId });
             setLoading(false);
@@ -36,7 +47,7 @@ const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
                     setFavId(voteResult);
                 } else {
                     // показуємо наступного кота
-                    const data: any = await fetchOneCat({ cache: true });
+                    const data: any = await fetchOneCat();
                     setImg(data);
                 }
                 // записуємо в логи
@@ -53,12 +64,12 @@ const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
         setLoading(false);
         if (delResult !== "error") {
             setError(false);
-            setLogs((logs: any) => [...logs, { time: `${hours}:${minutes}`, id: imageId, vote: 'delFav' }]);
+            setLogs((logs: any) => [...logs, { time: `${hours}:${minutes}`, id: imageId, vote: "delFav" }]);
         } else {
             setError(true);
         }
-        setFavId(null); 
-    }
+        setFavId(null);
+    };
 
     const getCurrentTime = () => {
         const now = new Date();
@@ -69,26 +80,28 @@ const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
 
     return (
         <div className={styles.panel}>
-            <div className={styles.panel__imgWrapper}>
-                <Image src={img[0].url} width={640} height={360} className={styles.panel__img} alt='cat' />
-                <div className={styles.panel__tools}>
-                    <button
-                        className={`${styles.panel__btn} ${styles.panel__btnLike}`}
-                        onClick={() => vote("like", img[0].id)}
-                    ></button>
-                    <button
-                        className={`${styles.panel__btn} ${styles.panel__btnFav} ${
-                            favId && styles.panel__btnFav_active
-                        }`}
-                        onClick={() => vote("fav", img[0].id)}
-                    ></button>
-                    <button
-                        className={`${styles.panel__btn} ${styles.panel__btnDis}`}
-                        onClick={() => vote("dislike", img[0].id)}
-                    ></button>
+            {img && (
+                <div className={styles.panel__imgWrapper}>
+                    <Image src={img[0].url} width={640} height={360} className={styles.panel__img} alt='cat' />
+                    <div className={styles.panel__tools}>
+                        <button
+                            className={`${styles.panel__btn} ${styles.panel__btnLike}`}
+                            onClick={() => vote("like", img[0].id)}
+                        ></button>
+                        <button
+                            className={`${styles.panel__btn} ${styles.panel__btnFav} ${
+                                favId && styles.panel__btnFav_active
+                            }`}
+                            onClick={() => vote("fav", img[0].id)}
+                        ></button>
+                        <button
+                            className={`${styles.panel__btn} ${styles.panel__btnDis}`}
+                            onClick={() => vote("dislike", img[0].id)}
+                        ></button>
+                    </div>
                 </div>
-            </div>
-            {error && !loading ? <h3>Sorry, something goes wrong.Try later.</h3> : null}
+            )}
+            {error && !loading ? <Error /> : null}
             {loading && (
                 <div>
                     <Spinner secondary />

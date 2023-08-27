@@ -1,18 +1,16 @@
 import styles from "./page.module.sass";
 import NavBtn from "@/components/nav-btn/Nav-btn";
-import GridPanel from "@/components/grid-panel/Grid-panel";
-import Message from "@/components/message/Message";
 import { fetchVotedCats } from "@/services/http-service";
+import FavsPanel from "@/components/favs-panel/Favs-panel";
 
 export default async function Page() {
-    const data: any = await fetchVotedCats({vote: 'fav'})
+    const imgs: any = await fetchVotedCats({ vote: "fav" });
     return (
         <section>
             <div className={styles.btnWrapper}>
                 <NavBtn text={"favourites"} />
             </div>
-            <GridPanel imgs={data} />
-            {data.length === 0 && <Message text='No item found' />}
+            <FavsPanel initialData={imgs} />
         </section>
     );
 }
