@@ -2,14 +2,13 @@
 
 import { FC, useEffect } from "react";
 import styles from "./gallery.module.sass";
-import Select from "@/components/select/Select";
+import Select from "../../components/select/Select";
 import { useState } from "react";
-import NavBtn from "@/components/nav-btn/Nav-btn";
-import Image from "next/image";
-import GridPanel from "@/components/grid-panel/Grid-panel";
-import Modal from "@/components/upload-modal/Upload-modal";
+import NavBtn from "../../components/nav-btn/Nav-btn";
+import GridPanel from "../../components/grid-panel/Grid-panel";
+import Modal from "../../components/upload-modal/Upload-modal";
 import { fetchCatImgs } from "@/services/http-service";
-import Message from "@/components/message/Message";
+import Message from "../../components/message/Message";
 import { addVote, deleteFavCat } from "@/services/http-service";
 import Spinner from "../spinner/Spinner";
 import Error from "../error/Error";
@@ -85,7 +84,7 @@ const Gallery: FC<GalleryProps> = ({ breedNames }) => {
         <>
             {showModal ? (
                 <div className={styles.modalWrapper}>
-                    <Modal isOpen={true} closeModal={closeModal} />
+                    <Modal closeModal={closeModal} />
                 </div>
             ) : (
                 <section>

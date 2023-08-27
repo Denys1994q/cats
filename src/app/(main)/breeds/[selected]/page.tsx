@@ -1,13 +1,13 @@
 "use client";
 
-import NavBtn from "@/components/nav-btn/Nav-btn";
+import NavBtn from "../../../../components/nav-btn/Nav-btn";
 import { useParams } from "next/navigation";
 import styles from "./page.module.sass";
-import Carousel from "@/components/carousel/Carousel";
+import Carousel from "../../../../components/carousel/Carousel";
 import { useEffect } from "react";
 import { fetchOneCatBreed } from "@/services/http-service";
 import { useState } from "react";
-import Error from "@/components/error/Error";
+import Error from "../../../../components/error/Error";
 
 export default function Page() {
     const params = useParams();

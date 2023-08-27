@@ -1,14 +1,14 @@
 "use client";
 
-import NavBtn from "@/components/nav-btn/Nav-btn";
+import NavBtn from "../../../components/nav-btn/Nav-btn";
 import styles from "./page.module.sass";
-import GridPanel from "@/components/grid-panel/Grid-panel";
-import Message from "@/components/message/Message";
+import GridPanel from "../../../components/grid-panel/Grid-panel";
+import Message from "../../../components/message/Message";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchCatOnName } from "@/services/http-service";
-import Error from "@/components/error/Error";
-import Spinner from "@/components/spinner/Spinner";
+import Error from "../../../components/error/Error";
+import Spinner from "../../../components/spinner/Spinner";
 
 export default function Page() {
     const searchParams = useSearchParams();

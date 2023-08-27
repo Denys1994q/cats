@@ -18,10 +18,8 @@ interface SelectProps {
 }
 
 const Select: FC<SelectProps> = ({ data, primary, secondary, label, id, onSelect }) => {
-    // const [selectedBreed, setSelectedBreed] = useState(data[0].value);
 
     const selectHandler = (id: string, value: any) => {
-        // setSelectedBreed(value);
         onSelect(id, value);
     };
 

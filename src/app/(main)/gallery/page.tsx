@@ -1,4 +1,4 @@
-import Gallery from "@/components/gallery/Gallery";
+import Gallery from "../../../components/gallery/Gallery";
 import { fetchBreedNames } from "@/services/http-service";
 
 export default async function Page() {

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { FC, useState, useEffect } from "react";
-import NavBtn from "@/components/nav-btn/Nav-btn";
-import Select from "@/components/select/Select";
+import NavBtn from "../../components/nav-btn/Nav-btn";
+import Select from "../../components/select/Select";
 import GridPanel from "../grid-panel/Grid-panel";
 import styles from "./breeds-panel.module.sass";
 import { fetchAllCatBreeds, fetchOneCatBreed } from "@/services/http-service";
@@ -18,14 +18,6 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
     const [afterfirstLoad, setAfterFirstLoad] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-
-    // список селектів лімітів
-    const limits = [
-        { id: "5", name: "Limit: 5" },
-        { id: "10", name: "Limit: 10" },
-        { id: "15", name: "Limit: 15" },
-        { id: "20", name: "Limit: 20" },
-    ];
 
     useEffect(() => {
         setAfterFirstLoad(true);
@@ -60,8 +52,8 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
     }, [breed, limit, order, page]);
 
     useEffect(() => {
-        setPage(0)
-    }, [breed, limit, order])
+        setPage(0);
+    }, [breed, limit, order]);
 
     const onSelect = (id: string, value: any) => {
         if (id === "limit") {
@@ -70,6 +62,13 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
             setBreed(value);
         }
     };
+
+    const limits = [
+        { id: "5", name: "Limit: 5" },
+        { id: "10", name: "Limit: 10" },
+        { id: "15", name: "Limit: 15" },
+        { id: "20", name: "Limit: 20" },
+    ];
 
     return (
         <>
@@ -103,8 +102,16 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
                     <>
                         <GridPanel imgs={imgs} breeds />
                         <div className={styles.btnsWrapper}>
-                            <button className={styles.prevBtn} disabled={page === 0} onClick={() => setPage(prev => prev - 1)}></button>
-                            <button className={styles.nextBtn} disabled={imgs.length < limit} onClick={() => setPage(prev => prev + 1)}></button>
+                            <button
+                                className={styles.prevBtn}
+                                disabled={page === 0}
+                                onClick={() => setPage(prev => prev - 1)}
+                            ></button>
+                            <button
+                                className={styles.nextBtn}
+                                disabled={imgs.length < limit}
+                                onClick={() => setPage(prev => prev + 1)}
+                            ></button>
                         </div>
                     </>
                 ) : null}

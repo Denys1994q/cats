@@ -1,4 +1,4 @@
-import SearchPanel from "@/components/search-panel/Search-panel";
+import SearchPanel from "../../components/search-panel/Search-panel";
 import styles from "./layout.module.sass";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {

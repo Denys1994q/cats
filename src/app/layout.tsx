@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import NavMenu from "@/components/nav-menu/Nav-menu";
+import NavMenu from "../components/nav-menu/Nav-menu";
 
 const jost = Jost({ subsets: ["latin"] });
 

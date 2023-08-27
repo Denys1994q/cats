@@ -1,7 +1,6 @@
 "use client"
 
 import { FC, useState, useEffect } from "react";
-// import styles from './error.module.sass'
 import GridPanel from "../grid-panel/Grid-panel";
 import Message from "../message/Message";
 import { fetchVotedCats } from "@/services/http-service";
@@ -14,7 +13,6 @@ interface VoteResultsPanelProps {
 
 const VoteResultsPanel: FC<VoteResultsPanelProps> = ({ initialData, dislikes }) => {
     const [imgs, setImgs] = useState(initialData);
-    // const [error, setError] = useState(false);
     const [error, setError] = useState(false);
 
     useEffect(() => {

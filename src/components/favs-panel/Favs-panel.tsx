@@ -5,7 +5,6 @@ import GridPanel from "../grid-panel/Grid-panel";
 import Message from "../message/Message";
 import { deleteFavCat, fetchVotedCats } from "@/services/http-service";
 import Error from "../error/Error";
-import Spinner from "../spinner/Spinner";
 
 interface FavPanelProps {
     initialData: any[];

@@ -8,6 +8,7 @@ import { addVote } from "@/services/http-service";
 import { fetchOneCat, deleteFavCat } from "@/services/http-service";
 import Spinner from "../spinner/Spinner";
 import Error from "../error/Error";
+import { v4 as uuidv4 } from "uuid";
 
 const VotingPanel: FC = () => {
     const [img, setImg] = useState<any>(null);
@@ -112,25 +113,25 @@ const VotingPanel: FC = () => {
                 {logs.map((log: any) => {
                     if (log.vote === "like") {
                         return (
-                            <li>
+                            <li key={uuidv4()}>
                                 <Message like time={log.time} id={log.id} />
                             </li>
                         );
                     } else if (log.vote === "dislike") {
                         return (
-                            <li>
+                            <li key={uuidv4()}>
                                 <Message dislike time={log.time} id={log.id} />
                             </li>
                         );
                     } else if (log.vote === "fav") {
                         return (
-                            <li>
+                            <li key={uuidv4()}>
                                 <Message favourite time={log.time} id={log.id} />
                             </li>
                         );
                     } else if (log.vote === "delFav") {
                         return (
-                            <li>
+                            <li key={uuidv4()}>
                                 <Message delFavourite time={log.time} id={log.id} />
                             </li>
                         );
