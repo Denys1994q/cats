@@ -143,8 +143,9 @@ const Gallery: FC<GalleryProps> = ({ breedNames }) => {
                     </div>
                     <div>
                         {loading && <Spinner secondary />}
-                        {error ? <Error /> : <GridPanel imgs={imgs} favs handleClick={onGalleryImgClick} />}
-                        {imgs.length === 0 && <Message text='No item found' /> }
+                        {error && !loading ? <Error /> : null}
+                        {!error && !loading ? <GridPanel imgs={imgs} favs handleClick={onGalleryImgClick} /> : null}
+                        {!error && !loading && imgs.length === 0 ? <Message text='No item found' /> : null}
                     </div>
                 </section>
             )}

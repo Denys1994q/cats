@@ -1,4 +1,5 @@
 @import '../styles/variables.sass'
+@import '../styles/mixins.sass'
 
 *, ::after, ::before
     margin: 0
@@ -63,18 +64,26 @@ ul
     flex-wrap: wrap
     gap: 137px
     position: relative
+    @include respond(tab-land)
+        justify-content: center
+        gap: 40px
     &__nav-panel
         width: 446px
         background: inherit
         position: sticky
         top: 10px
         align-self: start
+        @include respond(tab-land)
+            position: relative
+            width: 100%
     &__content
         width: 680px
 .nav-panel
     &__logo
         display: block
         margin-bottom: 80px
+        @include respond(tab-land)
+            margin-bottom: 10px
     &__greeting
         margin-left: -23px
         margin-bottom: 10px
@@ -82,3 +91,5 @@ ul
         font-size: 20px
         color: $main-grey
         margin-bottom: 60px
+        @include respond(tab-land)
+            margin-bottom: 10px

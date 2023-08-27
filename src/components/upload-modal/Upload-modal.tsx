@@ -4,6 +4,7 @@ import Message from "../message/Message";
 import { useState } from "react";
 import { uploadCat } from "@/services/http-service";
 import Spinner from "../spinner/Spinner";
+import Error from "../error/Error";
 
 const UploadModal = ({ isOpen, closeModal }: any) => {
     if (!isOpen) return null;
@@ -12,17 +13,18 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
     const [result, setResult] = useState<any>("");
     const [isDragOver, setIsDragOver] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const [typeError, setTypeError] = useState(false);
 
     const getFile = (e: any) => {
         const allowedTypes = ["image/jpeg", "image/png"];
         if (allowedTypes.includes(e.type)) {
-            setTypeError(false)
+            setTypeError(false);
             setResult("");
             setFile(e);
             setFileUrl(URL.createObjectURL(e));
         } else {
-            setTypeError(true)
+            setTypeError(true);
             return;
         }
     };
@@ -30,11 +32,16 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
     const uploadFile = async () => {
         setLoading(true);
         const data = await uploadCat(file);
-        setResult(data);
-        if (data === "success") {
-            setFile(null);
-        }
         setLoading(false);
+        if (data !== "error") {
+            setError(false);
+            setResult(data);
+            if (data === "success") {
+                setFile(null);
+            }
+        } else {
+            setError(true);
+        }
     };
 
     return (
@@ -103,8 +110,11 @@ const UploadModal = ({ isOpen, closeModal }: any) => {
                         )}
                     </>
                 ) : (
-                    <p className={styles.result}>No file selected</p>
+                    <>
+                        <p className={styles.result}>No file selected</p>
+                    </>
                 )}
+                {error && !loading ? <Error /> : null}
                 {result && result === "success" ? <Message successText='Thanks for the Upload - Cat found!' /> : null}
                 {result && result === "failed" ? <Message errorText='No Cat found - try a different one' /> : null}
             </div>

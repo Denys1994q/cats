@@ -1,4 +1,5 @@
-@import '../../styles/variables.sass'
+@import '../../styles/variables'
+@import '../../styles/mixins'
 
 .navMenu
     &__title
@@ -12,14 +13,11 @@
         margin-bottom: 10px
     &__image
         margin-bottom: 10px
-    // &__imageContainer
-    //     width: 138px
-    //     height: 198px
-    //     position: relative
-    //     margin-bottom: 10px
+        @include respond(tab-land)
+            display: none
     &__item:hover .navMenu__itemTitle
-            background: $secondary-pink
-            transition: all .4s ease
+        background: $secondary-pink
+        transition: all .4s ease
     &__itemTitle
         border-radius: 10px
         padding: 10px 20px

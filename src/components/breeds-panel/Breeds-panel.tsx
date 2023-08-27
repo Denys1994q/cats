@@ -1,8 +1,6 @@
 "use client";
 
 import React, { FC, useState, useEffect } from "react";
-// import styles from "./select.module.sass";
-import Image from "next/image";
 import NavBtn from "@/components/nav-btn/Nav-btn";
 import Select from "@/components/select/Select";
 import GridPanel from "../grid-panel/Grid-panel";
@@ -15,6 +13,7 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
     const [breed, setBreed] = useState("all");
     const [limit, setLimit] = useState("5");
     const [order, setOrder] = useState("asc");
+    const [page, setPage] = useState(0);
     const [imgs, setImgs] = useState(initialData);
     const [afterfirstLoad, setAfterFirstLoad] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -37,7 +36,7 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
             setLoading(true);
             const fetchData = async () => {
                 if (breed === "all") {
-                    const response: any = await fetchAllCatBreeds({ limit, order });
+                    const response: any = await fetchAllCatBreeds({ limit, order, page });
                     if (response !== "error") {
                         setLoading(false);
                         setImgs(response);
@@ -46,7 +45,7 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
                         setError(true);
                     }
                 } else {
-                    const response = await fetchOneCatBreed({ limit, breed, order });
+                    const response = await fetchOneCatBreed({ limit, breed, order, page });
                     if (response !== "error") {
                         setLoading(false);
                         setImgs(response);
@@ -58,7 +57,11 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
             };
             fetchData();
         }
-    }, [breed, limit, order]);
+    }, [breed, limit, order, page]);
+
+    useEffect(() => {
+        setPage(0)
+    }, [breed, limit, order])
 
     const onSelect = (id: string, value: any) => {
         if (id === "limit") {
@@ -96,7 +99,15 @@ const BreedsPanel: FC<any> = ({ initialData, breedNames }) => {
             <div>
                 {loading && <Spinner secondary />}
                 {(error || initialData === "error") && !loading ? <Error /> : null}
-                {initialData !== "error" && !error &&!loading ? <GridPanel imgs={imgs} breeds /> : null}
+                {initialData !== "error" && !error && !loading ? (
+                    <>
+                        <GridPanel imgs={imgs} breeds />
+                        <div className={styles.btnsWrapper}>
+                            <button className={styles.prevBtn} disabled={page === 0} onClick={() => setPage(prev => prev - 1)}></button>
+                            <button className={styles.nextBtn} disabled={imgs.length < limit} onClick={() => setPage(prev => prev + 1)}></button>
+                        </div>
+                    </>
+                ) : null}
             </div>
         </>
     );

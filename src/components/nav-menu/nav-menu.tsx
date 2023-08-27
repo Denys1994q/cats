@@ -32,7 +32,7 @@ const NavMenu: FC<NavMenuProps> = ({ links, heading }) => {
                     const notActiveImg = hoveredImgIndex === index  ? link.hoverImg : link.img;
                     return (
                         <Link href={`/${link.title.toLowerCase()}`}>
-                            <li
+                            <li 
                                 className={styles.navMenu__item}
                                 onMouseEnter={() => setHoveredImgIndex(index)}
                                 onMouseLeave={() => setHoveredImgIndex(null)}

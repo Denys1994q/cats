@@ -2,7 +2,6 @@ import { useState, FC } from "react";
 import styles from "./carousel.module.sass";
 import NavBtns from "../nav-btns/Nav-btns";
 import Image from "next/image";
-// import Link from "next/link";
 
 export interface Slide {
     url: string;

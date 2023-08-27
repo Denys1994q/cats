@@ -25,6 +25,7 @@ const VotingPanel: FC = () => {
         const response: any = await fetchOneCat();
         setLoading(false);
         if (response !== "error") {
+            setError(false);
             setImg(response);
         } else {
             setError(true);

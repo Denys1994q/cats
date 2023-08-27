@@ -44,3 +44,25 @@
         border: 2px solid $secondary-pink
         &::before
             background: url('/images/descend-pink-icon.svg')
+.btnsWrapper
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    gap: 2rem
+.prevBtn
+    width: 122px
+    height: 40px
+    background: url('/images/prev-default.png')
+    &:hover
+        background: url('/images/prev-hover.png')
+    &:disabled
+        background: url('/images/prev-disabled.png')
+
+.nextBtn
+    width: 122px
+    height: 40px
+    background: url('/images/next-default.png')
+    &:hover
+        background: url('/images/next-hover.png')
+    &:disabled
+        background: url('/images/next-disabled.png')
