@@ -9,17 +9,33 @@ interface MessageProps {
     like?: boolean;
     dislike?: boolean;
     favourite?: boolean;
+    delFavourite?: boolean;
     id?: string;
     time?: string;
 }
 
-const Message: FC<MessageProps> = ({ text, successText, errorText, like, dislike, favourite, id, time }) => {
+const Message: FC<MessageProps> = ({
+    text,
+    successText,
+    errorText,
+    like,
+    dislike,
+    favourite,
+    delFavourite,
+    id,
+    time,
+}) => {
     return (
         <div className={`${styles.listItem} ${(successText || errorText) && styles.secondary}`}>
             {text && <p className={styles.textItem}>{text}</p>}
             {(successText || errorText) && (
                 <>
-                    <Image src={`${successText ? '/images/tick.svg' : '/images/error.svg'}`} height={20} width={20} alt='icon' />
+                    <Image
+                        src={`${successText ? "/images/tick.svg" : "/images/error.svg"}`}
+                        height={20}
+                        width={20}
+                        alt='icon'
+                    />
                     <p className={styles.textItem}>{successText || errorText}</p>
                 </>
             )}
@@ -59,6 +75,16 @@ const Message: FC<MessageProps> = ({ text, successText, errorText, like, dislike
                     </div>
                     <div className={styles.iconItem}>
                         <Image src='/images/favs-default.svg' height={20} width={20} alt='icon' />
+                    </div>
+                </>
+            )}
+            {delFavourite && (
+                <>
+                    <div className={styles.timeWrapper}>
+                        <div className={styles.timeItem}>{time}</div>
+                        <div className={styles.textItem}>
+                            Image ID: <span>{id}</span> was removed from Favourites
+                        </div>
                     </div>
                 </>
             )}

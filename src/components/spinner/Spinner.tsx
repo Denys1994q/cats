@@ -1,12 +1,16 @@
-import React from "react";
+import { FC } from "react";
 import styles from "./spinner.module.sass"; // Ваші стилі для спінера
 
-const Spinner = () => {
+interface SpinnerProps {
+    secondary?: boolean
+}
+
+const Spinner: FC<SpinnerProps> = ({secondary}) => {
     return (
         <div className={styles.spinner}>
-            <div className={styles.bounce1}></div>
-            <div className={styles.bounce2}></div>
-            <div className={styles.bounce3}></div>
+            <div className={`${styles.bounce1} ${secondary && styles.bounce1_secondary}`}></div>
+            <div className={`${styles.bounce1} ${secondary && styles.bounce1_secondary}`}></div>
+            <div className={`${styles.bounce1} ${secondary && styles.bounce1_secondary}`}></div>
         </div>
     );
 };

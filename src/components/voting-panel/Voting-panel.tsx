@@ -5,7 +5,8 @@ import Image from "next/image";
 import styles from "./voting-panel.module.sass";
 import Message from "../message/Message";
 import { addVote } from "@/services/http-service";
-import { fetchOneCat } from "@/services/http-service";
+import { fetchOneCat, deleteFavCat } from "@/services/http-service";
+import Spinner from "../spinner/Spinner";
 
 interface VotingPanelProps {
     image: any;
@@ -15,20 +16,49 @@ interface VotingPanelProps {
 const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
     const [img, setImg] = useState<any>(image);
     const [logs, setLogs] = useState<any>([]);
-    const [isFav, setIsFav] = useState(false)
+    const [favId, setFavId] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const vote = async (result: string, imageId: string) => {
-        if (result === 'fav') {setIsFav(true)}
+        setLoading(true);
         const { hours, minutes } = getCurrentTime();
-        addVote({ vote: result, imageId: imageId });
-        setLogs((logs: any) => [
-            ...logs,
-            { time: `${hours}:${minutes}`, id: imageId, vote: result },
-        ]);
 
-        const data: any = await fetchOneCat();
-        setImg(data);
+        if (favId && result === "fav") {
+            removeFromFavs(favId, imageId)
+        } else {
+            const voteResult = await addVote({ vote: result, imageId: imageId });
+            setLoading(false);
+            if (voteResult !== "error") {
+                setError(false);
+                if (result === "fav") {
+                    // стилізуємо іконку
+                    setFavId(voteResult);
+                } else {
+                    // показуємо наступного кота
+                    const data: any = await fetchOneCat({ cache: true });
+                    setImg(data);
+                }
+                // записуємо в логи
+                setLogs((logs: any) => [...logs, { time: `${hours}:${minutes}`, id: imageId, vote: result }]);
+            } else {
+                setError(true);
+            }
+        }
     };
+
+    const removeFromFavs = async (favId: string, imageId: string) => {
+        const { hours, minutes } = getCurrentTime();
+        const delResult = await deleteFavCat(favId);
+        setLoading(false);
+        if (delResult !== "error") {
+            setError(false);
+            setLogs((logs: any) => [...logs, { time: `${hours}:${minutes}`, id: imageId, vote: 'delFav' }]);
+        } else {
+            setError(true);
+        }
+        setFavId(null); 
+    }
 
     const getCurrentTime = () => {
         const now = new Date();
@@ -44,17 +74,26 @@ const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
                 <div className={styles.panel__tools}>
                     <button
                         className={`${styles.panel__btn} ${styles.panel__btnLike}`}
-                        onClick={() => vote('like', img[0].id)}
+                        onClick={() => vote("like", img[0].id)}
                     ></button>
                     <button
-                        className={`${styles.panel__btn} ${styles.panel__btnFav} ${isFav && styles.panel__btnFav_active}`} onClick={() => vote('fav', img[0].id)}
+                        className={`${styles.panel__btn} ${styles.panel__btnFav} ${
+                            favId && styles.panel__btnFav_active
+                        }`}
+                        onClick={() => vote("fav", img[0].id)}
                     ></button>
                     <button
                         className={`${styles.panel__btn} ${styles.panel__btnDis}`}
-                        onClick={() => vote('dislike', img[0].id)}
+                        onClick={() => vote("dislike", img[0].id)}
                     ></button>
                 </div>
             </div>
+            {error && !loading ? <h3>Sorry, something goes wrong.Try later.</h3> : null}
+            {loading && (
+                <div>
+                    <Spinner secondary />
+                </div>
+            )}
             <ul className={styles.panel__list}>
                 {logs.map((log: any) => {
                     if (log.vote === "like") {
@@ -73,6 +112,12 @@ const VotingPanel: FC<VotingPanelProps> = ({ image, id }) => {
                         return (
                             <li>
                                 <Message favourite time={log.time} id={log.id} />
+                            </li>
+                        );
+                    } else if (log.vote === "delFav") {
+                        return (
+                            <li>
+                                <Message delFavourite time={log.time} id={log.id} />
                             </li>
                         );
                     }

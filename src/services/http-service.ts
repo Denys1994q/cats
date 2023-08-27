@@ -4,49 +4,6 @@ type Cat = {
     url: string;
 };
 
-type Breeds = {
-    weight: {
-        imperial: string;
-        metric: string;
-    };
-    id: string;
-    name: string;
-    cfa_url: string;
-    vetstreet_url: string;
-    vcahospitals_url: string;
-    temperament: string;
-    origin: string;
-    country_codes: string;
-    country_code: string;
-    description: string;
-    life_span: string;
-    indoor: number;
-    lap: number;
-    alt_names: string;
-    adaptability: number;
-    affection_level: number;
-    child_friendly: number;
-    dog_friendly: number;
-    energy_level: number;
-    grooming: number;
-    health_issues: number;
-    intelligence: number;
-    shedding_level: number;
-    social_needs: number;
-    stranger_friendly: number;
-    vocalisation: number;
-    experimental: number;
-    hairless: number;
-    natural: number;
-    rare: number;
-    rex: number;
-    suppressed_tail: number;
-    short_legs: number;
-    wikipedia_url: string;
-    hypoallergenic: number;
-    reference_image_id: string;
-};
-
 
 type BreedOption = {
     limit?: string;
@@ -181,23 +138,47 @@ export const uploadCat = async (file: any) => {
 }
 
 // проголосувати за зображення кота
-export const addVote = async ({vote, imageId}: any) => {
-    const body = {
+export const addVote = async ({ vote, imageId }: any) => {
+    let body: any = {
         image_id: imageId,
         sub_id: "denys_rybachok",
-        value: vote === 'like' ? 1 : -1
+    };
+
+    if (vote === 'like' || vote === 'dislike') {
+        body.value = vote === 'like' ? 1 : -1;
     }
-    const options: any = {
+
+    const options = {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: {'x-api-key': '3c71318c-32fa-4b4a-a5bf-f888e6bf7e60', 'Content-Type': 'application/json'}
+        headers: {
+            'x-api-key': '3c71318c-32fa-4b4a-a5bf-f888e6bf7e60',
+            'Content-Type': 'application/json'
+        }
     };
-    fetch('https://api.thecatapi.com/v1/votes', options);
-}
 
-// отримати зображення котів, за яких було проголосовано (лайки і дізлайки)
+    try {
+        const response = await fetch(`https://api.thecatapi.com/v1/${vote === 'fav' ? 'favourites' : 'votes'}`, options);
+        if (response.ok) {
+            if (vote === 'fav') {
+                const responseData = await response.json();
+                const id = responseData.id; // Отримуємо значення "id" потрібне для видалення 
+                return id
+            } else {
+                return 'ok';
+            }
+    
+        } else {
+            return 'error';
+        }
+    } catch (error) {
+        return 'error';
+    }
+};
+
+// отримати зображення котів, за яких було проголосовано (лайки, дізлайки, улюблені)
 export async function fetchVotedCats(options: {vote: string}) {   
-    const imageRes = await fetch('http://api.thecatapi.com/v1/votes?sub_id=denys_rybachok&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60', {
+    const imageRes = await fetch(`http://api.thecatapi.com/v1/${options.vote === 'fav' ? 'favourites' : 'votes'}?sub_id=denys_rybachok&api_key=3c71318c-32fa-4b4a-a5bf-f888e6bf7e60`, {
         cache: "no-store",
     });
     const imageData = await imageRes.json();
@@ -221,7 +202,33 @@ export async function fetchVotedCats(options: {vote: string}) {
         })
         return imgsMod;
     } else if (options.vote === 'fav') {
-        return []
+        const imgsMod = imageData.map((item: any) => {
+            return {
+                url: item.image.url,
+                name: item.image_id, 
+                id: item.image_id, 
+            }
+        })
+        return imgsMod
     }
 };
 
+// видалити з улюблених
+export async function deleteFavCat(imageId: string = '232391055') {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'x-api-key': '3c71318c-32fa-4b4a-a5bf-f888e6bf7e60',
+            'Content-Type': 'application/json'
+        }
+    };
+    try {
+        const response = await fetch(`https://api.thecatapi.com/v1/favourites/${imageId}`, options);
+        if (response.ok) {
+            return 'ok'
+        }
+    } catch {
+        return 'error'
+    }
+
+}
