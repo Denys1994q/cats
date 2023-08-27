@@ -6,12 +6,8 @@ import Message from "../message/Message";
 import { deleteFavCat, fetchVotedCats } from "../../services/http-service";
 import Error from "../error/Error";
 
-interface FavPanelProps {
-    initialData: any[];
-}
-
-const FavsPanel: FC<FavPanelProps> = ({ initialData }) => {
-    const [imgs, setImgs] = useState(initialData);
+const FavsPanel: FC = () => {
+    const [imgs, setImgs] = useState([]);
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -29,7 +25,7 @@ const FavsPanel: FC<FavPanelProps> = ({ initialData }) => {
     const removeImg = async (id: string) => {
         const delResult = await deleteFavCat(id);
         if (delResult !== "error") {
-            setImgs(imgs => imgs.filter(img => img.id !== id));
+            setImgs(imgs => imgs.filter((img: any) => img.id !== id));
         } else {
             setError(true);
         }

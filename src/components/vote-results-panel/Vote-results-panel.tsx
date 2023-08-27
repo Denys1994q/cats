@@ -7,11 +7,10 @@ import { fetchVotedCats } from "../../services/http-service";
 import Error from "../error/Error";
 
 interface VoteResultsPanelProps {
-    initialData: any;
     dislikes?: boolean;
 }
 
-const VoteResultsPanel: FC<VoteResultsPanelProps> = ({ initialData, dislikes }) => {
+const VoteResultsPanel: FC<VoteResultsPanelProps> = ({ dislikes }) => {
     const [imgs, setImgs] = useState([]);
     const [error, setError] = useState(false);
 

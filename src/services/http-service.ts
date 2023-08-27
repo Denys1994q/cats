@@ -230,7 +230,7 @@ export const addVote = async ({ vote, imageId }: any) => {
 
 export async function fetchVotedCats(options: {vote: string}) {
     try {
-        const imageRes = await fetch(`http://api.thecatapi.com/v1/${options.vote === 'fav' ? 'favourites' : 'votes'}?sub_id=${userKey}&api_key=${process.env.NEXT_PUBLIC_API_KEY}`, {
+        const imageRes = await fetch(`https://api.thecatapi.com/v1/${options.vote === 'fav' ? 'favourites' : 'votes'}?sub_id=${userKey}&api_key=${process.env.NEXT_PUBLIC_API_KEY}`, {
             cache: "no-store",
         });
 
