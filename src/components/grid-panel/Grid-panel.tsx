@@ -21,27 +21,32 @@ const GridPanel: FC<GridPanelProps> = ({ imgs, breeds, favs, handleClick }) => {
     const generateGrid = (startIndex: number, endIndex: number) => {
         return (
             <div className={`${styles.grid} ${startIndex >= 5 ? styles.grid__reverseColumns : ""}`}>
-                {imgs.slice(startIndex, endIndex).map((item, i) => (
-                    <div key={i} className={`${favs || breeds ? styles.gridItem_favs : ""} ${styles.gridItem}`}>
-                        <Image src={item.url} fill={true} className={styles.image} alt='cat-image' />
-                        {breeds ? (
-                            <Link href={`/breeds/${item.id.toLowerCase()}`}>
-                                <div className={styles.imageText}>{item.name}</div>
-                            </Link>
-                        ) : (
-                            <>
-                                {favs && (
-                                    <button
-                                        className={`${styles.imageText} ${styles.imageText_centred} ${
-                                            item.isFav && styles.imageText_fav
-                                        }`}
-                                        onClick={() => handleClick(item.id)}
-                                    ></button>
+                {imgs && imgs.length > 0 ? (
+                    <>
+                        {" "}
+                        {imgs.slice(startIndex, endIndex).map((item, i) => (
+                            <div key={i} className={`${favs || breeds ? styles.gridItem_favs : ""} ${styles.gridItem}`}>
+                                <Image src={item.url} fill={true} className={styles.image} alt='cat-image' />
+                                {breeds ? (
+                                    <Link href={`/breeds/${item.id.toLowerCase()}`}>
+                                        <div className={styles.imageText}>{item.name}</div>
+                                    </Link>
+                                ) : (
+                                    <>
+                                        {favs && (
+                                            <button
+                                                className={`${styles.imageText} ${styles.imageText_centred} ${
+                                                    item.isFav && styles.imageText_fav
+                                                }`}
+                                                onClick={() => handleClick(item.id)}
+                                            ></button>
+                                        )}
+                                    </>
                                 )}
-                            </>
-                        )}
-                    </div>
-                ))}
+                            </div>
+                        ))}
+                    </>
+                ) : null}
             </div>
         );
     };
