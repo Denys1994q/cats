@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, FC } from "react";
-import Image from "next/image";
+import { FC } from "react";
 import styles from "./nav-btn.module.sass";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface NavBtnProps {
     text: string;
@@ -12,9 +10,15 @@ interface NavBtnProps {
 }
 
 const NavBtn: FC<NavBtnProps> = ({ text, secondary }) => {
+    const router = useRouter();
+
+    const goBack = () => {
+        router.back();
+    };
+
     return (
         <div className={styles.btnWrapper}>
-            <button className={styles.btn}></button>
+            <button className={styles.btn} onClick={goBack}></button>
             {secondary ? (
                 <button className={`${styles.btnText} ${styles.secondary}`}>{text}</button>
             ) : (

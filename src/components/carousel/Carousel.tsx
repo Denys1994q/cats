@@ -2,6 +2,7 @@ import { useState, FC } from "react";
 import styles from "./carousel.module.sass";
 import NavBtns from "../nav-btns/Nav-btns";
 import Image from "next/image";
+import { v4 as uuidv4 } from "uuid";
 
 export interface Slide {
     url: string;
@@ -26,6 +27,7 @@ const Carousel: FC<CarouselProps> = ({ data }) => {
                 <div className={styles.imgPanel}>
                     {data.map((item, idx) => (
                         <Image
+                            key={uuidv4()}
                             src={item.url}
                             width={640}
                             height={360}
@@ -36,6 +38,7 @@ const Carousel: FC<CarouselProps> = ({ data }) => {
                     <ul className={styles.panel__tools}>
                         {data.map((item, idx) => (
                             <li
+                                key={uuidv4()}
                                 className={`${styles.dot} ${idx === activeSlideIdx && styles.dotActive}`}
                                 onClick={() => setActiveSlideIdx(idx)}
                             ></li>

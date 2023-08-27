@@ -1,3 +1,8 @@
+let userKey: any = ''
+if (typeof window !== "undefined") {
+    userKey = localStorage.getItem('userKey');
+}
+
 // зображення одного кота
 export async function fetchOneCat() {
     try {
@@ -48,7 +53,6 @@ export const fetchOneCatBreed = async ({ limit, breed, order, page = 0 }: BreedO
         return 'error';
     }
 };
-
 
 // зображення котів всіх порід
 export const fetchAllCatBreeds = async ({ limit = '5', order = 'asc', page = 0 }: BreedOption) => {
@@ -189,7 +193,7 @@ export const uploadCat = async (file: any) => {
 export const addVote = async ({ vote, imageId }: any) => {
     let body: any = {
         image_id: imageId,
-        sub_id: "denys_rybachok",
+        sub_id: userKey,
     };
 
     if (vote === 'like' || vote === 'dislike') {
@@ -226,7 +230,7 @@ export const addVote = async ({ vote, imageId }: any) => {
 
 export async function fetchVotedCats(options: {vote: string}) {
     try {
-        const imageRes = await fetch(`http://api.thecatapi.com/v1/${options.vote === 'fav' ? 'favourites' : 'votes'}?sub_id=denys_rybachok&api_key=${process.env.NEXT_PUBLIC_API_KEY}`, {
+        const imageRes = await fetch(`http://api.thecatapi.com/v1/${options.vote === 'fav' ? 'favourites' : 'votes'}?sub_id=${userKey}&api_key=${process.env.NEXT_PUBLIC_API_KEY}`, {
             cache: "no-store",
         });
 

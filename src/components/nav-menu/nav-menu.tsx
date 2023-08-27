@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./nav-menu.module.sass";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 
 interface NavMenuLink {
     title: string;
@@ -29,10 +30,11 @@ const NavMenu: FC<NavMenuProps> = ({ links, heading }) => {
             <ul className={styles.navMenu__list}>
                 {links.map((link, index) => {
                     const isActive = pathname === "/" + link.title.toLowerCase();
-                    const notActiveImg = hoveredImgIndex === index  ? link.hoverImg : link.img;
+                    const notActiveImg = hoveredImgIndex === index ? link.hoverImg : link.img;
                     return (
-                        <Link href={`/${link.title.toLowerCase()}`}>
-                            <li 
+                        <Link href={`/${link.title.toLowerCase()}`} key={uuidv4()}>
+                            <li
+                                key={uuidv4()}
                                 className={styles.navMenu__item}
                                 onMouseEnter={() => setHoveredImgIndex(index)}
                                 onMouseLeave={() => setHoveredImgIndex(null)}

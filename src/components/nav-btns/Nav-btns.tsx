@@ -6,6 +6,7 @@ import styles from "./nav-btns.module.sass";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BtnLink } from "../search-panel/Search-panel";
+import { v4 as uuidv4 } from "uuid";
 
 interface NavBtnsProps {
     links: BtnLink[];
@@ -21,7 +22,7 @@ const NavBtns: FC<NavBtnsProps> = ({links}) => {
                 const isActive = pathname === "/" + btn.title.toLowerCase();
                 const notActiveBtn = hoveredBtnIndex === index ? btn.hoverImg : btn.img;
                 return (
-                    <Link href={`/${btn.title.toLowerCase()}`}>
+                    <Link key={uuidv4()} href={`/${btn.title.toLowerCase()}`}>
                         <button
                             className={`${hoveredBtnIndex === index ? styles.btnHovered : ""} ${isActive ? styles.btnActive : ""}  ${styles.btn}`}
                             onMouseEnter={() => setHoveredBtnIndex(index)}
