@@ -22,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         },
         {
             title: "Breeds",
-            img: "/images/breeds.svg",
-            hoverImg: "/images/breeds-hover.svg",
-            activeImg: "/images/breeds-active.svg",
+            img: "/images/breeds.webp",
+            hoverImg: "/images/breeds-hover.webp",
+            activeImg: "/images/breeds-active.webp",
         },
         {
             title: "Gallery",
