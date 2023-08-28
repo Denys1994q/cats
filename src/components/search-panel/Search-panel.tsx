@@ -3,7 +3,6 @@
 import { useState, FC } from "react";
 import styles from "./search-panel.module.sass";
 import NavBtns from "../nav-btns/Nav-btns";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export interface BtnLink {

@@ -172,7 +172,7 @@ export const uploadCat = async (file: any) => {
             headers: {'x-api-key': `${process.env.NEXT_PUBLIC_API_KEY}`},
         };
         
-        const response = await fetch('https://api.thecatapi.com/v1D/images/upload', options);
+        const response = await fetch('https://api.thecatapi.com/v1/images/upload', options);
         
         if (response.status === 201) {
             return 'success';

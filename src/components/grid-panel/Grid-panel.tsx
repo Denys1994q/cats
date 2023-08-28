@@ -53,10 +53,15 @@ const GridPanel: FC<GridPanelProps> = ({ imgs, breeds, favs, handleClick }) => {
 
     return (
         <>
-            {generateGrid(0, 5)}
-            {generateGrid(5, 10)}
-            {generateGrid(10, 15)}
-            {generateGrid(15, imgs.length)}
+            {imgs && imgs.length > 0 ? (
+                <>
+                    {" "}
+                    {generateGrid(0, 5)}
+                    {generateGrid(5, 10)}
+                    {generateGrid(10, 15)}
+                    {generateGrid(15, imgs.length)}
+                </>
+            ) : null}
         </>
     );
 };

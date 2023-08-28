@@ -1,6 +1,5 @@
 import { useState, FC } from "react";
 import styles from "./carousel.module.sass";
-import NavBtns from "../nav-btns/Nav-btns";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 

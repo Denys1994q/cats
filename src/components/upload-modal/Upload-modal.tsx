@@ -6,8 +6,7 @@ import { uploadCat } from "../../services/http-service";
 import Spinner from "../spinner/Spinner";
 import Error from "../error/Error";
 
-const UploadModal = ({ isOpen, closeModal }: any) => {
-    // if (!isOpen) return null;
+const UploadModal = ({ closeModal }: any) => {
     const [file, setFile] = useState<any>(null);
     const [fileUrl, setFileUrl] = useState<any>(null);
     const [result, setResult] = useState<any>("");
