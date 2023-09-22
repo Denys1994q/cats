@@ -42,10 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <Link href='/' className='nav-panel__logo'>
                             <Image src='/images/logo.png' height={24} width={106} alt='logo' />
                         </Link>
-                        <div className='nav-panel__greeting'>
-                            <Image src='/images/greeting.svg' height={58} width={182} alt='greeting-image' />
-                        </div>
-                        <p className='nav-panel__subtitle'>Welcome to MacPaw Bootcamp 2023</p>
                         <NavMenu links={menuLinks} heading='Lets start using The Cat API' />
                     </div>
                     <div className='main-container__content'>{children}</div>
